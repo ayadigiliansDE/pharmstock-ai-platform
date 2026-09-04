@@ -1,0 +1,22 @@
+PHARMSTOCK STAGE 6B ACCEPTANCE
+
+Build-kit acceptance:
+- Stage 6A cloud success marker exists.
+- 11 tables in Desktop manifest.
+- 17 active 1:* single-direction relationships.
+- 18 explicit DAX measures.
+- Date table configuration included.
+- Three report page specifications included.
+- No monetary measure generated.
+- STAGE_6B_BUILD_KIT_STATUS=PASS.
+
+Desktop acceptance (manual inside Power BI Desktop):
+- 11 tables loaded in Import mode.
+- All 17 relationships verified active and Single direction.
+- dim_date marked as Date table using dim_date[date].
+- 18 explicit measures created and formatted.
+- Operations Overview page built.
+- Refresh succeeds.
+- PBIX or PBIP project saved.
+
+Only then may STAGE_6B_STATUS=PASS be recorded.

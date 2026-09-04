@@ -1,0 +1,33 @@
+{
+  "meta": {
+    "last_updated": "2026-07-23",
+    "results": {"skip": 0, "limit": 2, "total": 2}
+  },
+  "results": [
+    {
+      "product_id": "12345-678_aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+      "product_ndc": "12345-678",
+      "brand_name": "Test Brand",
+      "generic_name": "test ingredient",
+      "labeler_name": "Test Labeler",
+      "dosage_form": "TABLET",
+      "route": ["ORAL", "ORAL"],
+      "product_type": "HUMAN PRESCRIPTION DRUG",
+      "active_ingredients": [
+        {"name": "TEST INGREDIENT", "strength": "10 mg/1"}
+      ],
+      "packaging": [
+        {"package_ndc": "12345-678-01", "description": "30 TABLET in 1 BOTTLE"},
+        {"package_ndc": "12345-678-02", "description": "90 TABLET in 1 BOTTLE"}
+      ],
+      "openfda": {"rxcui": ["123456"]}
+    },
+    {
+      "product_id": "99999-001_ffffffff-bbbb-cccc-dddd-eeeeeeeeeeee",
+      "product_ndc": "99999-001",
+      "brand_name": "Broken Source Row",
+      "dosage_form": "CAPSULE",
+      "active_ingredients": []
+    }
+  ]
+}

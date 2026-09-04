@@ -1,0 +1,22 @@
+Stage 2D acceptance snapshot
+
+Automated suite:
+- 87 tests passed
+- Python compile checks passed
+
+Real-catalog acceptance fixture:
+- catalog products: 9,042
+- pharmacy branches: 25
+- branches per partition: 5
+- branch-product rows: 58,134
+- batch rows: 115,444
+- initial stock units: 704,588
+- output partitions: 5
+- output size: ~34 MB
+- STAGE_2D_SCALE_STATUS=PASS
+- STAGE_2D_FEFO_STATUS=PASS
+- STAGE_2D_STATUS=PASS
+
+Note: the acceptance environment uses PYTHONPATH=src because its host Python is not the project's
+3.14 target and therefore cannot editable-install this package. On Windows/Python 3.14, use
+`pip install -e ".[dev]"` as documented.

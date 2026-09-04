@@ -1,0 +1,11 @@
+Stage 7J acceptance requires:
+- Stage 7J DQ status PASS
+- raw tables 26/26
+- raw baseline rows 31,954,735
+- current views 26/26
+- Gold tables 3/3
+- duplicate CDC event rows 0
+- Debezium connector healthy
+- BigQuery storage < 8.2 GiB
+- Airflow webserver/scheduler running
+- STAGE_7J_STATUS=PASS

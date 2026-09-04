@@ -1,0 +1,6 @@
+project_id                = "pharmstock-ai-bq2-2026"
+region                    = "europe-west1"
+enable_billable_resources = false
+
+# Leave this placeholder untouched while enable_billable_resources=false.
+decision_api_image = "europe-west1-docker.pkg.dev/REPLACE_PROJECT/pharmstock-ml/decision-api:REPLACE_DIGEST"

@@ -1,0 +1,9 @@
+Stage 5D acceptance
+- local master snapshot PASS
+- product source explicitly openFDA / US
+- branch and supplier identity explicitly synthetic
+- four BigQuery master tables with unique primary keys
+- three dbt dimensions: dim_product, dim_branch, dim_supplier
+- relationship tests cover operational fact IDs against dimensions
+- no monetary measures generated
+- cloud writes guarded by explicit --execute; master replacement also requires --replace

@@ -1,0 +1,251 @@
+{
+  "connector": {
+    "billing_project": "YOUR_PROJECT_ID",
+    "driver_family": "ADBC",
+    "implementation": "2.0",
+    "name": "Google BigQuery",
+    "recommended_initial_storage_mode": "Import"
+  },
+  "dataset_id": "pharmstock_pbi",
+  "hide_from_report": [
+    "product_id",
+    "branch_id",
+    "supplier_id",
+    "purchase_order_id",
+    "event_id"
+  ],
+  "measures": [
+    "Requested Units",
+    "Fulfilled Units",
+    "Lost Units",
+    "Fulfillment Rate",
+    "Demand Lines",
+    "Baskets",
+    "Inventory Units In",
+    "Inventory Units Out",
+    "Net Quantity Change",
+    "Reorder Events",
+    "Recommended Reorder Units",
+    "Purchase Orders",
+    "Ordered Units",
+    "Received Units",
+    "Procurement Fill Rate",
+    "Restocked Units",
+    "Active Branches",
+    "Products With Demand"
+  ],
+  "project_id": "YOUR_PROJECT_ID",
+  "relationships": [
+    {
+      "cardinality": "one_to_many",
+      "cross_filter_direction": "single",
+      "from_column": "date",
+      "from_table": "dim_date",
+      "to_column": "event_date",
+      "to_table": "fact_sales_demand"
+    },
+    {
+      "cardinality": "one_to_many",
+      "cross_filter_direction": "single",
+      "from_column": "date",
+      "from_table": "dim_date",
+      "to_column": "event_date",
+      "to_table": "fact_inventory_movement"
+    },
+    {
+      "cardinality": "one_to_many",
+      "cross_filter_direction": "single",
+      "from_column": "date",
+      "from_table": "dim_date",
+      "to_column": "event_date",
+      "to_table": "fact_reorder_events"
+    },
+    {
+      "cardinality": "one_to_many",
+      "cross_filter_direction": "single",
+      "from_column": "date",
+      "from_table": "dim_date",
+      "to_column": "order_date",
+      "to_table": "fact_procurement_order_lifecycle"
+    },
+    {
+      "cardinality": "one_to_many",
+      "cross_filter_direction": "single",
+      "from_column": "date",
+      "from_table": "dim_date",
+      "to_column": "event_date",
+      "to_table": "mart_branch_daily_operations"
+    },
+    {
+      "cardinality": "one_to_many",
+      "cross_filter_direction": "single",
+      "from_column": "date",
+      "from_table": "dim_date",
+      "to_column": "event_date",
+      "to_table": "mart_product_daily_demand"
+    },
+    {
+      "cardinality": "one_to_many",
+      "cross_filter_direction": "single",
+      "from_column": "branch_id",
+      "from_table": "dim_branch",
+      "to_column": "branch_id",
+      "to_table": "fact_sales_demand"
+    },
+    {
+      "cardinality": "one_to_many",
+      "cross_filter_direction": "single",
+      "from_column": "branch_id",
+      "from_table": "dim_branch",
+      "to_column": "branch_id",
+      "to_table": "fact_inventory_movement"
+    },
+    {
+      "cardinality": "one_to_many",
+      "cross_filter_direction": "single",
+      "from_column": "branch_id",
+      "from_table": "dim_branch",
+      "to_column": "branch_id",
+      "to_table": "fact_reorder_events"
+    },
+    {
+      "cardinality": "one_to_many",
+      "cross_filter_direction": "single",
+      "from_column": "branch_id",
+      "from_table": "dim_branch",
+      "to_column": "branch_id",
+      "to_table": "fact_procurement_order_lifecycle"
+    },
+    {
+      "cardinality": "one_to_many",
+      "cross_filter_direction": "single",
+      "from_column": "branch_id",
+      "from_table": "dim_branch",
+      "to_column": "branch_id",
+      "to_table": "mart_branch_daily_operations"
+    },
+    {
+      "cardinality": "one_to_many",
+      "cross_filter_direction": "single",
+      "from_column": "product_id",
+      "from_table": "dim_product",
+      "to_column": "product_id",
+      "to_table": "fact_sales_demand"
+    },
+    {
+      "cardinality": "one_to_many",
+      "cross_filter_direction": "single",
+      "from_column": "product_id",
+      "from_table": "dim_product",
+      "to_column": "product_id",
+      "to_table": "fact_inventory_movement"
+    },
+    {
+      "cardinality": "one_to_many",
+      "cross_filter_direction": "single",
+      "from_column": "product_id",
+      "from_table": "dim_product",
+      "to_column": "product_id",
+      "to_table": "fact_reorder_events"
+    },
+    {
+      "cardinality": "one_to_many",
+      "cross_filter_direction": "single",
+      "from_column": "product_id",
+      "from_table": "dim_product",
+      "to_column": "product_id",
+      "to_table": "mart_product_daily_demand"
+    },
+    {
+      "cardinality": "one_to_many",
+      "cross_filter_direction": "single",
+      "from_column": "supplier_id",
+      "from_table": "dim_supplier",
+      "to_column": "supplier_id",
+      "to_table": "fact_procurement_order_lifecycle"
+    },
+    {
+      "cardinality": "one_to_many",
+      "cross_filter_direction": "single",
+      "from_column": "supplier_id",
+      "from_table": "dim_supplier",
+      "to_column": "supplier_id",
+      "to_table": "mart_supplier_procurement_performance"
+    }
+  ],
+  "stage": "6A",
+  "tables": [
+    {
+      "bigquery_table": "YOUR_PROJECT_ID.pharmstock_pbi.dim_date",
+      "name": "dim_date",
+      "source_type": "BigQuery View",
+      "storage_mode": "Import"
+    },
+    {
+      "bigquery_table": "YOUR_PROJECT_ID.pharmstock_pbi.dim_product",
+      "name": "dim_product",
+      "source_type": "BigQuery View",
+      "storage_mode": "Import"
+    },
+    {
+      "bigquery_table": "YOUR_PROJECT_ID.pharmstock_pbi.dim_branch",
+      "name": "dim_branch",
+      "source_type": "BigQuery View",
+      "storage_mode": "Import"
+    },
+    {
+      "bigquery_table": "YOUR_PROJECT_ID.pharmstock_pbi.dim_supplier",
+      "name": "dim_supplier",
+      "source_type": "BigQuery View",
+      "storage_mode": "Import"
+    },
+    {
+      "bigquery_table": "YOUR_PROJECT_ID.pharmstock_pbi.fact_sales_demand",
+      "name": "fact_sales_demand",
+      "source_type": "BigQuery View",
+      "storage_mode": "Import"
+    },
+    {
+      "bigquery_table": "YOUR_PROJECT_ID.pharmstock_pbi.fact_inventory_movement",
+      "name": "fact_inventory_movement",
+      "source_type": "BigQuery View",
+      "storage_mode": "Import"
+    },
+    {
+      "bigquery_table": "YOUR_PROJECT_ID.pharmstock_pbi.fact_reorder_events",
+      "name": "fact_reorder_events",
+      "source_type": "BigQuery View",
+      "storage_mode": "Import"
+    },
+    {
+      "bigquery_table": "YOUR_PROJECT_ID.pharmstock_pbi.fact_procurement_order_lifecycle",
+      "name": "fact_procurement_order_lifecycle",
+      "source_type": "BigQuery View",
+      "storage_mode": "Import"
+    },
+    {
+      "bigquery_table": "YOUR_PROJECT_ID.pharmstock_pbi.mart_branch_daily_operations",
+      "name": "mart_branch_daily_operations",
+      "source_type": "BigQuery View",
+      "storage_mode": "Import"
+    },
+    {
+      "bigquery_table": "YOUR_PROJECT_ID.pharmstock_pbi.mart_product_daily_demand",
+      "name": "mart_product_daily_demand",
+      "source_type": "BigQuery View",
+      "storage_mode": "Import"
+    },
+    {
+      "bigquery_table": "YOUR_PROJECT_ID.pharmstock_pbi.mart_supplier_procurement_performance",
+      "name": "mart_supplier_procurement_performance",
+      "source_type": "BigQuery View",
+      "storage_mode": "Import"
+    }
+  ],
+  "truth_boundary": {
+    "authoritative_monetary_data": false,
+    "pharmacy_network": "synthetic_Egypt",
+    "product_catalog": "official_openFDA_NDC_US_reference",
+    "supplier_network": "synthetic"
+  }
+}

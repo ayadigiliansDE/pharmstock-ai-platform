@@ -1,0 +1,104 @@
+{
+  "stage": "7L",
+  "version": "0.36.0",
+  "name": "GOVERNED_DECISION_WORKFLOW",
+  "files": [
+    {
+      "path": ".env.example",
+      "sha256": "fe435d02e57f7631584d10fe365ab4e76772cec91006ef54a0d2c7391a95c26c",
+      "bytes": 4232
+    },
+    {
+      "path": "README.md",
+      "sha256": "57db63b9b7f69fa3c7b1f5481010099e65e071af33fd5c0a01b36dce3962fbdb",
+      "bytes": 18034
+    },
+    {
+      "path": "README_STAGE7L_V0360_GOVERNED_DECISION_WORKFLOW.md",
+      "sha256": "a957172141dd1269027790572dcf248df50f0ae5e80a67998e8ad4663ae34d38",
+      "bytes": 1873
+    },
+    {
+      "path": "docs/EVOLUTION.md",
+      "sha256": "a23670ed4cd0a66c975ddb780e4db1aa3026d9383a8df960b500526350ff9146",
+      "bytes": 18117
+    },
+    {
+      "path": "docs/STAGE_07L_GOVERNED_DECISION_WORKFLOW.md",
+      "sha256": "f2f4650287b46c50412ea4f9b76b39cfc7d9e3a3c3b9874d73acb646bcff557e",
+      "bytes": 2602
+    },
+    {
+      "path": "docs/STAGE_07L_LOCAL_RUN.md",
+      "sha256": "16c13893594f932d311958d88acff42e756e575081a324452e6a1258d2f5a501",
+      "bytes": 1574
+    },
+    {
+      "path": "infra/docker/docker-compose.stage7l.yml",
+      "sha256": "d7a5038f4a8cc025b278a6de4890d46df94452ae721d6b0e5b7f4592dd835c28",
+      "bytes": 1532
+    },
+    {
+      "path": "infra/docker/postgres/sql/010_stage7l_governed_decisions.sql",
+      "sha256": "03d787268503587c5e666249bdf2f52b04800ff216b34bb00f8ba19764e7028b",
+      "bytes": 6656
+    },
+    {
+      "path": "infra/docker/stage7l/Dockerfile",
+      "sha256": "58ebfefa8967ac4fe7f077a34726ab7495a53c0994a91668179e477443f0bae3",
+      "bytes": 219
+    },
+    {
+      "path": "infra/docker/stage7l/requirements.txt",
+      "sha256": "7f94a4b0b3d5a18c1d1e6bd4b93ded25a8fdf3d7dc70dd536359a52a5f054130",
+      "bytes": 47
+    },
+    {
+      "path": "operations/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "operations/stage7l/__init__.py",
+      "sha256": "377762a69e97c7334717e0d9277290e10b462139bb891d3b47f1e7b98b253ad4",
+      "bytes": 63
+    },
+    {
+      "path": "operations/stage7l/worker.py",
+      "sha256": "2579f097d1a90b0b94b3809b87d8a14031e695244cf5c04286810c4b138fe90a",
+      "bytes": 33162
+    },
+    {
+      "path": "scripts/manage_stage7l_case.py",
+      "sha256": "313ca67bf931f0e3cc250ffde2ec9811e105f24f71fb90171c3ed3ef73233621",
+      "bytes": 2091
+    },
+    {
+      "path": "scripts/run_checkpoint.py",
+      "sha256": "e7cde5e6642d932c3944fa164a156ecdea521dcd19e3c4a8b6c07db253ce0c85",
+      "bytes": 4310
+    },
+    {
+      "path": "scripts/run_stage7l.py",
+      "sha256": "224bf6fddee9f588afafa5eb39bffe73054b8e8314594729cbb3e135a767cf2d",
+      "bytes": 9457
+    },
+    {
+      "path": "src/pharmstock/onprem/stage7l.py",
+      "sha256": "c0f1d0db3108b17bfc5aaa8193fe11ecb1a1a6d32491c5098cc1e486198403e1",
+      "bytes": 9096
+    },
+    {
+      "path": "tests/test_stage7l_workflow.py",
+      "sha256": "56a3a40a671a3d58f4c3bef2bf33b55c2b607d1ad8b3d08ec8b77df226963f55",
+      "bytes": 8306
+    }
+  ],
+  "validation": {
+    "stage7l_tests": "14/14 PASS",
+    "regression": "111/111 PASS",
+    "python_compile": "PASS",
+    "line_length_new_python": "PASS",
+    "ruff": "NOT_AVAILABLE_IN_HANDOFF_RUNTIME"
+  }
+}

@@ -1,0 +1,21 @@
+Stage 3A acceptance contract
+============================
+
+Offline build acceptance (completed in build environment):
+- 132 pytest tests passed
+- Python compileall passed
+- Kafka routing/serialization contract tests passed
+
+Not executable in the build environment:
+- Docker/Kafka integration (Docker runtime is not installed there)
+- Ruff executable is not installed there
+
+User-machine integration acceptance:
+- package version = 0.11.0
+- pytest passes
+- ruff check . passes
+- Docker Kafka 4.3.1 reports healthy
+- all four managed topics exist
+- producer publishes one inventory.reorder_required v1.0 event
+- consumer validates and reads back the same event_id and key
+- STAGE_3A_STATUS=PASS

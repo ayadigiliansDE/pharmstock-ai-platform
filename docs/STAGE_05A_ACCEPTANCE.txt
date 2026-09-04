@@ -1,0 +1,16 @@
+STAGE 5A ACCEPTANCE
+===================
+
+Local acceptance contract:
+- Stage 4B _SUCCESS exists.
+- Seven Silver tables are schema/type validated with Spark 4.2.0.
+- event_id is unique within every warehouse table.
+- event_date is present inside exported Parquet files.
+- Six fact-table counts reconcile exactly to Stage 4B Silver counts.
+- event_index row count equals total accepted Silver events.
+- Seven BigQuery schema JSON contracts are generated.
+- BigQuery bootstrap DDL and dry-run load plan are generated.
+- No cloud mutation occurs in run_checkpoint.py 5a.
+
+Required marker:
+STAGE_5A_STATUS=PASS

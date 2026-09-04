@@ -1,0 +1,90 @@
+x-airflow-common: &airflow-common
+  image: apache/airflow:2.10.5-python3.12
+  environment: &airflow-common-env
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-db/airflow
+    AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "false"
+    AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/dags
+    AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: "15"
+    AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "false"
+    PYTHONPATH: /opt/pharmstock/src
+    CONNECT_REST_URL: http://connect:8083
+    PHARMSTOCK_ASSISTANT_REFRESH_HOST: postgres
+    PHARMSTOCK_ASSISTANT_REFRESH_PORT: "5432"
+    PHARMSTOCK_ASSISTANT_REFRESH_DB: pharmstock_ops
+    PHARMSTOCK_ASSISTANT_REFRESH_USER: pharmstock_assistant_refresh
+    PHARMSTOCK_ASSISTANT_REFRESH_PASSWORD: "${PHARMSTOCK_ASSISTANT_REFRESH_PASSWORD:?PHARMSTOCK_ASSISTANT_REFRESH_PASSWORD must be set}"
+    PHARMSTOCK_BQ_PROJECT: "${PHARMSTOCK_BQ_PROJECT:-pharmstock-ai-bq2-2026}"
+    PHARMSTOCK_BQ_LOCATION: "${PHARMSTOCK_BQ_LOCATION:-EU}"
+    PHARMSTOCK_BQ_WARN_GIB: "${PHARMSTOCK_BQ_WARN_GIB:-8.2}"
+    PHARMSTOCK_BQ_HARD_STOP_GIB: "${PHARMSTOCK_BQ_HARD_STOP_GIB:-8.5}"
+  volumes:
+    - ../../dags:/opt/airflow/dags:ro
+    - ../../:/opt/pharmstock
+    - type: bind
+      source: "${APPDATA}/gcloud"
+      target: /home/airflow/.config/gcloud
+      read_only: true
+  depends_on:
+    airflow-db:
+      condition: service_healthy
+  restart: unless-stopped
+
+services:
+  airflow-db:
+    image: postgres:16-alpine
+    hostname: airflow-db
+    container_name: pharmacy-airflow-db
+    environment:
+      POSTGRES_DB: airflow
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: "${PHARMSTOCK_AIRFLOW_DB_PASSWORD:?PHARMSTOCK_AIRFLOW_DB_PASSWORD must be set}"
+    volumes:
+      - pharmstock-airflow-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airflow -d airflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  airflow-init:
+    <<: *airflow-common
+    container_name: pharmacy-airflow-init
+    restart: "no"
+    command:
+      - bash
+      - -c
+      - >-
+        airflow db migrate &&
+        (airflow users create --username "$${PHARMSTOCK_AIRFLOW_ADMIN_USER}" --password "$${PHARMSTOCK_AIRFLOW_ADMIN_PASSWORD}" --firstname PharmStock
+        --lastname Admin --role Admin --email admin@pharmstock.local || true)
+
+  airflow-webserver:
+    <<: *airflow-common
+    container_name: pharmacy-airflow-webserver
+    ports:
+      - "${PHARMSTOCK_AIRFLOW_PORT:-8088}:8080"
+    command: webserver
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:8080/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+
+  airflow-scheduler:
+    <<: *airflow-common
+    container_name: pharmacy-airflow-scheduler
+    command: scheduler
+    healthcheck:
+      test: ["CMD-SHELL", "airflow jobs check --job-type SchedulerJob --hostname '$${HOSTNAME}' || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 20
+      start_period: 20s
+
+volumes:
+  pharmstock-airflow-db:
+

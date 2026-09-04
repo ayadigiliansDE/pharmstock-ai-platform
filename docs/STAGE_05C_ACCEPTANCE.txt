@@ -1,0 +1,24 @@
+PHARMSTOCK V2 — STAGE 5C ACCEPTANCE
+
+LOCAL
+[ ] package version = 0.18.0
+[ ] 217 pytest tests pass
+[ ] Ruff passes
+[ ] dbt is installed
+[ ] 7 staging models discovered
+[ ] 3 intermediate models discovered
+[ ] 7 Gold models discovered
+[ ] >= 9 singular dbt tests discovered
+[ ] dbt parse passes
+[ ] STAGE_5C_STATUS=PASS
+
+CLOUD
+[ ] Stage 5B cloud execution report is verified
+[ ] dbt debug passes with ADC
+[ ] dbt build passes
+[ ] dbt tests pass
+[ ] pharmstock_stg exists
+[ ] pharmstock_gold exists
+[ ] 7 Gold tables verified
+[ ] no fabricated monetary measures
+[ ] STAGE_5C_CLOUD_STATUS=PASS

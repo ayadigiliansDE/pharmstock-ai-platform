@@ -1,0 +1,74 @@
+﻿services:
+  stage7o-assistant:
+    container_name: pharmstock-stage7o-assistant
+    image: pharmstock-stage7o-assistant:0.39.0
+
+    build:
+      context: ../..
+      dockerfile: infra/docker/stage7o/Dockerfile
+
+    working_dir: /workspace
+
+    command:
+      - uvicorn
+      - operations.stage7o.api:app
+      - --host
+      - "0.0.0.0"
+      - --port
+      - "8092"
+
+    environment:
+      PYTHONPATH: /workspace:/workspace/src
+
+      PHARMSTOCK_STAGE7O_STAGE7M_BASE_URL: http://stage7m-api:8091
+
+      # Required service-to-service credential.
+      # No default secret is stored in the repository.
+      PHARMSTOCK_STAGE7O_STAGE7M_API_KEY: "${PHARMSTOCK_STAGE7O_STAGE7M_API_KEY:?PHARMSTOCK_STAGE7O_STAGE7M_API_KEY must be set}"
+
+      # Local LLM runtime.
+      # Ollama is the default development provider and requires no paid API.
+      PHARMSTOCK_STAGE7O_LLM_PROVIDER: "${PHARMSTOCK_STAGE7O_LLM_PROVIDER:-ollama}"
+
+      PHARMSTOCK_STAGE7O_OLLAMA_BASE_URL: "${PHARMSTOCK_STAGE7O_OLLAMA_BASE_URL:-http://host.docker.internal:11434}"
+
+      PHARMSTOCK_STAGE7O_OLLAMA_MODEL: "${PHARMSTOCK_STAGE7O_OLLAMA_MODEL:-qwen3:4b}"
+
+      # Optional OpenAI provider configuration.
+      # Disabled unless PHARMSTOCK_STAGE7O_LLM_PROVIDER=openai.
+      # No secret is stored in the repository.
+      PHARMSTOCK_STAGE7O_OPENAI_API_KEY: "${PHARMSTOCK_STAGE7O_OPENAI_API_KEY:-}"
+
+      PHARMSTOCK_STAGE7O_OPENAI_MODEL: "${PHARMSTOCK_STAGE7O_OPENAI_MODEL:-gpt-5.6-terra}"
+
+    volumes:
+      - ../..:/workspace
+
+    ports:
+      - "127.0.0.1:8092:8092"
+
+    networks:
+      - default
+
+    restart: unless-stopped
+
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - >
+          import urllib.request;
+          urllib.request.urlopen(
+              'http://127.0.0.1:8092/health',
+              timeout=5
+          ).read()
+      interval: 15s
+      timeout: 6s
+      retries: 4
+      start_period: 10s
+
+networks:
+  default:
+    external: true
+    name: docker_default

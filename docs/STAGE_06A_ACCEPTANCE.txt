@@ -1,0 +1,11 @@
+Stage 6A acceptance
+- local checkpoint PASS
+- dbt parse PASS
+- 11 serving views defined
+- 4 governed dimensions including dim_date
+- 17 one-to-many single-direction semantic relationships
+- 18 explicit non-monetary DAX measures
+- BigQuery deployment verifies every serving object is a VIEW
+- mirrored serving row counts equal Gold sources
+- no monetary field fabrication
+- STAGE_6A_CLOUD_STATUS=PASS after explicit cloud execution

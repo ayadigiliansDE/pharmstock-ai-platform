@@ -1,0 +1,13 @@
+pharmstock_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: "{{ env_var('PHARMSTOCK_BQ_PROJECT') }}"
+      dataset: "{{ env_var('PHARMSTOCK_DBT_BASE_DATASET', 'pharmstock') }}"
+      location: "{{ env_var('PHARMSTOCK_BQ_LOCATION', 'EU') }}"
+      threads: 4
+      job_execution_timeout_seconds: 300
+      job_retries: 1
+      priority: interactive

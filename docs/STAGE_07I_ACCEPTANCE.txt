@@ -1,0 +1,27 @@
+STAGE 7I ACCEPTANCE
+===================
+
+Required predecessor:
+- STAGE_7H_STATUS=PASS
+- 26/26 raw tables
+- 31,954,735 raw rows
+- Stage 7G CDC resume offsets preserved
+
+PASS requires:
+1. Debezium connector RUNNING.
+2. Kafka start offsets come from Stage 7G or last successful Stage 7I batch.
+3. No retention gap at any CDC topic/partition.
+4. Spark reads one deterministic bounded [start,end) range.
+5. Invalid Debezium CDC rows = 0.
+6. BigQuery raw baseline is not rewritten or copied.
+7. CDC delta table is UNPARTITIONED and append-only.
+8. 26 current-state views exist.
+9. BigQuery unique events for the batch equal the Kafka offset-range record count.
+10. CDC resume offsets advance only after verification.
+11. Storage guard is checked before every cloud batch.
+12. No new load begins when current/projected storage is >= 8.5 GiB.
+13. Historical Kafka replay = NO.
+
+Runtime output for a successful non-empty batch:
+STAGE_7I_BATCH_STATUS=PASS
+STAGE_7I_RUNTIME_STATUS=READY

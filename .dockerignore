@@ -1,0 +1,38 @@
+# Keep Stage 7K Docker build context small and deterministic.
+# The ML image only copies infra/docker/stage7k/requirements.txt; project code
+# is bind-mounted at runtime.
+.git/
+.github/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.vscode/
+.idea/
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Large local datasets and generated state must never be sent to Docker build.
+artifacts/
+data/
+models/
+mlruns/
+checkpoints/
+chroma_db/
+
+# Generated analytics/runtime output.
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+airflow/logs/
+*.pbix
+*.pbit
+
+# Secrets/local configuration.
+.env
+*.key
+*.pem
+*service-account*.json

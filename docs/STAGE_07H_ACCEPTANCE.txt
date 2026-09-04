@@ -1,0 +1,21 @@
+Stage 7H acceptance
+
+Local preflight:
+1. Stage 7G _SUCCESS exists and rebuild_verification status is PASS.
+2. BigQuery-ready Stage 7G plan contains exactly 26 snapshot tables.
+3. Every positive-row snapshot table has local Parquet files.
+4. Planned rows equal Stage 7G verified snapshot total.
+5. Stage 7H dbt source/staging/intermediate/gold files are complete.
+6. Checkpoint performs no cloud mutation.
+
+Cloud acceptance:
+7. Cloud execution requires both --execute and --replace.
+8. All 26 raw tables are staged before any final promotion begins.
+9. Every staging table row count equals the Stage 7G manifest.
+10. Every staging table primary key is unique.
+11. Final BigQuery tables are replaced per-table only after all staging validations pass.
+12. BigQuery row counts are rechecked after promotion.
+13. Stage 7H dbt build passes with fail-fast semantics.
+14. Three Stage 7H Gold marts exist and are non-empty.
+15. Historical Stage 7E rows are not replayed through Kafka.
+16. Stage 7G CDC resume offsets remain preserved.

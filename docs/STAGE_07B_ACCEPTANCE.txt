@@ -1,0 +1,17 @@
+Stage 7B acceptance checklist
+
+[ ] package version is 0.23.1
+[ ] pytest passes
+[ ] ruff check . passes
+[ ] default checkpoint generates 5,000 branches
+[ ] all 27 governorates are represented
+[ ] CAPMAS population reference is 105,914,499
+[ ] CAPMAS national general-pharmacy reference is 86,741
+[ ] branch IDs and codes are unique
+[ ] organization foreign keys are valid
+[ ] every generated branch is SYNTHETIC_CALIBRATED
+[ ] no generated branch is represented as a real licensed pharmacy
+[ ] governorate modeled counts reconcile to 5,000
+[ ] modeled full-market counts reconcile to 86,741
+[ ] cloud mutation is NO
+[ ] STAGE_7B_STATUS=PASS

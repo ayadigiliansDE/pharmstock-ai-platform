@@ -1,0 +1,26 @@
+services:
+  spark-stage7g:
+    image: apache/spark:4.2.0-python3
+    profiles: ["stage7g"]
+    user: "0:0"
+    working_dir: /opt/pharmstock
+    environment:
+      PYTHONPATH: /opt/pharmstock/src
+      KAFKA_BOOTSTRAP_SERVERS: kafka:19092
+      SPARK_STAGE7G_OUTPUT: /opt/pharmstock/artifacts/stage7g
+      SPARK_STAGE7G_JDBC_URL: jdbc:postgresql://postgres:5432/pharmstock_ops
+      SPARK_STAGE7G_JDBC_USER: pharmstock_app
+      SPARK_STAGE7G_JDBC_PASSWORD: "${PHARMSTOCK_APP_PASSWORD:?PHARMSTOCK_APP_PASSWORD must be set}"
+      SPARK_STAGE7G_START_OFFSETS: /opt/pharmstock/artifacts/stage7g/cutover_start_offsets.json
+      SPARK_STAGE7G_END_OFFSETS: /opt/pharmstock/artifacts/stage7g/cutover_end_offsets.json
+    volumes:
+      - ../../:/opt/pharmstock
+      - spark-stage7g-ivy:/root/.ivy2
+    depends_on:
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+
+volumes:
+  spark-stage7g-ivy:

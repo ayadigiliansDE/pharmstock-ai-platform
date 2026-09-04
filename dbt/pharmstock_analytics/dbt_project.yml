@@ -1,0 +1,47 @@
+name: pharmstock_analytics
+version: 1.0.0
+config-version: 2
+
+profile: pharmstock_analytics
+
+model-paths: ["models"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+clean-targets: ["target", "dbt_packages", "logs"]
+
+models:
+  pharmstock_analytics:
+    staging:
+      +materialized: view
+      +schema: stg
+      +tags: ["stage5c", "staging"]
+    intermediate:
+      +materialized: ephemeral
+      +tags: ["stage5c", "intermediate"]
+    master_staging:
+      +materialized: view
+      +schema: stg
+      +tags: ["stage5d", "master_staging"]
+    dimensions:
+      +materialized: table
+      +schema: gold
+      +tags: ["stage5d", "dimension", "powerbi"]
+    marts:
+      +materialized: table
+      +schema: gold
+      +tags: ["stage5c", "gold", "powerbi"]
+    powerbi_serving:
+      +materialized: view
+      +schema: pbi
+      +tags: ["stage6a", "powerbi", "serving"]
+    rebuild_staging:
+      +materialized: view
+      +schema: rebuild_stg
+      +tags: ["stage7h", "rebuild_staging"]
+    rebuild_intermediate:
+      +materialized: ephemeral
+      +tags: ["stage7h", "rebuild_intermediate"]
+    rebuild_marts:
+      +materialized: table
+      +schema: rebuild_gold
+      +tags: ["stage7h", "rebuild_gold"]

@@ -1,0 +1,20 @@
+Stage 4B acceptance target
+==========================
+
+Package version: 0.15.0
+Unit/regression tests: 174 passed
+Ruff: All checks passed!
+Spark runtime: Apache Spark 4.2.0
+
+Required runtime properties:
+- Stage 4A Bronze remains source-faithful by Kafka topic/partition/offset.
+- Silver contains one row per accepted event_id.
+- Exact replay copies are written to exact_duplicates audit.
+- Same event_id with different semantic content is rejected as a conflict.
+- Event-specific invalid payloads are written to payload_rejects.
+- All six normalized event tables contain at least one row in the checkpoint.
+- Bronze row accounting reconciles exactly.
+- Second full-refresh pass returns identical accounting counts.
+
+Final marker:
+STAGE_4B_STATUS=PASS

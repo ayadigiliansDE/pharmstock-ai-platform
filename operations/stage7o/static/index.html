@@ -1,0 +1,1380 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  />
+
+  <title>PharmStock AI Assistant</title>
+
+  <style>
+    :root {
+      color-scheme: dark;
+
+      --bg: #0b1020;
+      --panel: #121a2d;
+      --panel-2: #18233b;
+      --border: #263451;
+      --text: #eef4ff;
+      --muted: #9fb0cc;
+      --accent: #69a7ff;
+      --success: #6dd8a2;
+      --warning: #ffc76d;
+      --danger: #ff7c8a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(
+          circle at top left,
+          #16264a 0,
+          transparent 34%
+        ),
+        var(--bg);
+      color: var(--text);
+      font-family:
+        Inter,
+        Segoe UI,
+        Arial,
+        sans-serif;
+    }
+
+    .app {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 48px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+
+    .title {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.05;
+    }
+
+    .subtitle {
+      margin: 10px 0 0;
+      max-width: 760px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .badge {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--success);
+      border-radius: 999px;
+      padding: 9px 14px;
+      white-space: nowrap;
+      font-size: 13px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns:
+        minmax(0, 1.6fr)
+        minmax(300px, 0.8fr);
+      gap: 20px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      background: rgba(18, 26, 45, 0.94);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow:
+        0 20px 50px
+        rgba(0, 0, 0, 0.2);
+    }
+
+    .section-title {
+      margin: 0 0 14px;
+      font-size: 16px;
+    }
+
+    .prompts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .prompt-button {
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      color: var(--text);
+      padding: 9px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .prompt-button:hover {
+      border-color: var(--accent);
+    }
+
+    label {
+      display: block;
+      margin: 0 0 7px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    textarea,
+    input {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: #0d1527;
+      color: var(--text);
+      border-radius: 12px;
+      outline: none;
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 130px;
+      padding: 14px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    input {
+      padding: 11px 12px;
+    }
+
+    textarea:focus,
+    input:focus {
+      border-color: var(--accent);
+    }
+
+    .scope-panel {
+      margin-top: 14px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(24, 35, 59, 0.45);
+    }
+
+    .scope-panel[hidden] {
+      display: none;
+    }
+
+    .scope-header {
+      margin-bottom: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .scope-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    button.primary {
+      border: 0;
+      background: var(--accent);
+      color: #06101f;
+      font-weight: 700;
+      border-radius: 12px;
+      padding: 12px 18px;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      border-radius: 12px;
+      padding: 12px 18px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .answer {
+      margin-top: 20px;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+    }
+
+    .answer-text {
+      line-height: 1.7;
+      color: var(--text);
+      min-height: 80px;
+    }
+
+    .answer-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .answer-card {
+      padding: 15px 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(24, 35, 59, 0.48);
+    }
+
+    .answer-card-title {
+      margin-bottom: 7px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .answer-card-text {
+      white-space: pre-wrap;
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    .answer-notice {
+      border-left: 3px solid var(--warning);
+      background: rgba(255, 193, 92, 0.07);
+    }
+
+    .answer-scope {
+      border-left: 3px solid var(--accent);
+      background: rgba(105, 167, 255, 0.06);
+    }
+
+    .answer-result {
+      border-left: 3px solid var(--success);
+    }
+
+    .answer-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .answer-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .badge-critical {
+      color: var(--danger);
+      border-color: rgba(255, 107, 107, 0.45);
+      background: rgba(255, 107, 107, 0.08);
+    }
+
+    .badge-watch {
+      color: var(--warning);
+      border-color: rgba(255, 193, 92, 0.45);
+      background: rgba(255, 193, 92, 0.08);
+    }
+
+    .badge-approved {
+      color: var(--success);
+      border-color: rgba(109, 216, 162, 0.4);
+      background: rgba(109, 216, 162, 0.08);
+    }
+
+    .badge-closed {
+      color: var(--muted);
+    }
+
+    .status {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .status.error {
+      color: var(--danger);
+    }
+
+    .meta-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .meta-item {
+      padding: 12px;
+      border-radius: 12px;
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+    }
+
+    .meta-label {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .meta-value {
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .governance-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .governance-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      font-size: 13px;
+    }
+
+    .yes {
+      color: var(--success);
+    }
+
+    .no {
+      color: var(--warning);
+    }
+
+    .disclosure {
+      margin-top: 14px;
+      border-left: 3px solid var(--warning);
+      background: rgba(255, 199, 109, 0.08);
+      padding: 12px;
+      border-radius: 8px;
+      color: #ffe6b6;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .header {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .scope-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .provider-pill {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .provider-deterministic {
+      color: var(--success);
+      background: rgba(109, 216, 162, 0.08);
+      border-color: rgba(109, 216, 162, 0.35);
+    }
+
+    .provider-ollama {
+      color: var(--accent);
+      background: rgba(105, 167, 255, 0.08);
+      border-color: rgba(105, 167, 255, 0.35);
+    }
+
+    .provider-other {
+      color: var(--muted);
+    }
+  
+    /* STAGE7O_UI_FINAL_COMPACT_POLISH */
+
+    .answer-stack {
+      gap: 10px;
+    }
+
+    .answer-card {
+      padding: 14px 16px;
+    }
+
+    .answer-card-text {
+      line-height: 1.55;
+    }
+
+    .answer-badges {
+      margin-top: 8px;
+    }
+
+    .answer-controls {
+      border-left: 3px solid var(--warning);
+      background: rgba(255, 193, 92, 0.045);
+    }
+
+    .answer-controls .answer-card-title {
+      color: var(--warning);
+    }
+
+</style>
+</head>
+
+<body>
+  <main class="app">
+    <header class="header">
+      <div>
+        <h1 class="title">
+          PharmStock AI Assistant
+        </h1>
+
+        <p class="subtitle">
+          Governed, read-only decision intelligence for
+          inventory, demand, ML signals, suppliers, and
+          replenishment workflows.
+        </p>
+      </div>
+
+      <div class="badge">
+        Read-only · Human controlled
+      </div>
+    </header>
+
+    <section class="layout">
+      <div class="card">
+        <h2 class="section-title">
+          Ask the assistant
+        </h2>
+
+        <div class="prompts" id="samplePrompts">
+          <button
+            class="prompt-button"
+            data-question="Which branches have highest stockout risk?"
+          >
+            Highest stockout risk
+          </button>
+
+          <button
+            class="prompt-button"
+            data-question="Why did model recommend 65 units?"
+          >
+            Explain 65 units
+          </button>
+
+          <button
+            class="prompt-button"
+            data-question="Show approved replenishment drafts."
+          >
+            Approved drafts
+          </button>
+
+          <button
+            class="prompt-button"
+            data-question="Which suppliers have worst lead time?"
+          >
+            Supplier lead time
+          </button>
+
+          <button
+            class="prompt-button"
+            data-question="What changed in demand?"
+          >
+            Demand change
+          </button>
+
+          <button
+            class="prompt-button"
+            data-question="Explain CRITICAL stockout signal."
+          >
+            CRITICAL signal
+          </button>
+
+          <button
+            class="prompt-button"
+            data-question="What actions require human approval?"
+          >
+            Human approval
+          </button>
+        </div>
+
+        <label for="question">
+          Question
+        </label>
+
+        <textarea
+          id="question"
+          placeholder="Ask a governed PharmStock question..."
+        ></textarea>
+
+        <div
+          id="scopePanel"
+          class="scope-panel"
+          hidden
+        >
+          <div class="scope-header">
+            Reorder scope
+          </div>
+
+          <div class="scope-grid">
+            <div>
+              <label for="branchId">
+                Branch ID
+              </label>
+
+              <input
+                id="branchId"
+                type="text"
+                placeholder="Required for reorder explanation"
+              />
+            </div>
+
+            <div>
+              <label for="productId">
+                Product ID
+              </label>
+
+              <input
+                id="productId"
+                type="text"
+                placeholder="Required for reorder explanation"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button
+            id="askButton"
+            class="primary"
+          >
+            Ask
+          </button>
+
+          <button
+            id="clearButton"
+            class="secondary"
+          >
+            Clear
+          </button>
+        </div>
+
+        <div class="answer">
+          <h2 class="section-title">
+            Answer
+          </h2>
+
+          <div
+            id="answerText"
+            class="answer-text"
+          >
+            Ready.
+          </div>
+
+          <div
+            id="statusText"
+            class="status"
+          ></div>
+        </div>
+      </div>
+
+      <aside class="card">
+        <h2 class="section-title">
+          Runtime context
+        </h2>
+
+        <div class="meta-grid">
+          <div class="meta-item">
+            <span class="meta-label">
+              Intent
+            </span>
+
+            <span
+              id="intentValue"
+              class="meta-value"
+            >
+              —
+            </span>
+          </div>
+
+          <div class="meta-item">
+            <span class="meta-label">
+              Provider
+            </span>
+
+            <span
+              id="providerValue"
+              class="meta-value"
+            >
+              —
+            </span>
+          </div>
+
+          <div class="meta-item">
+            <span class="meta-label">
+              Model
+            </span>
+
+            <span
+              id="modelValue"
+              class="meta-value"
+            >
+              —
+            </span>
+          </div>
+
+          <div class="meta-item">
+            <span class="meta-label">
+              Response time
+            </span>
+
+            <span
+              id="responseTimeValue"
+              class="meta-value"
+            >
+              ?
+            </span>
+          </div>
+
+          <div class="meta-item">
+            <span class="meta-label">
+              Operational provenance
+            </span>
+
+            <span
+              id="operationalValue"
+              class="meta-value"
+            >
+              —
+            </span>
+          </div>
+
+          <div class="meta-item">
+            <span class="meta-label">
+              Reference provenance
+            </span>
+
+            <span
+              id="referenceValue"
+              class="meta-value"
+            >
+              —
+            </span>
+          </div>
+        </div>
+
+        <h2
+          class="section-title"
+          style="margin-top: 22px;"
+        >
+          Governance
+        </h2>
+
+        <div
+          id="governanceList"
+          class="governance-list"
+        >
+          <div class="governance-row">
+            <span>Direct database access</span>
+            <span>—</span>
+          </div>
+        </div>
+
+        <div
+          id="disclosureBox"
+          class="disclosure"
+          hidden
+        ></div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const questionEl =
+      document.getElementById("question");
+
+    const branchIdEl =
+      document.getElementById("branchId");
+
+    const productIdEl =
+      document.getElementById("productId");
+
+    const scopePanel =
+      document.getElementById("scopePanel");
+
+    const askButton =
+      document.getElementById("askButton");
+
+    const clearButton =
+      document.getElementById("clearButton");
+
+    const answerText =
+      document.getElementById("answerText");
+
+    const statusText =
+      document.getElementById("statusText");
+
+    const intentValue =
+      document.getElementById("intentValue");
+
+    const providerValue =
+      document.getElementById("providerValue");
+
+    const modelValue =
+      document.getElementById("modelValue");
+
+    const responseTimeValue =
+      document.getElementById("responseTimeValue");
+
+    const operationalValue =
+      document.getElementById("operationalValue");
+
+    const referenceValue =
+      document.getElementById("referenceValue");
+
+    const governanceList =
+      document.getElementById("governanceList");
+
+    const disclosureBox =
+      document.getElementById("disclosureBox");
+
+    const reorderQuestion =
+      "Why did model recommend 65 units?";
+
+    const reorderBranchId =
+      "875c14a5-83e8-5371-b6a9-5fbc7fae2347";
+
+    const reorderProductId =
+      "3f76e303-2592-5eb1-a64e-170b3595e833";
+
+    function setScopeVisible(visible) {
+      scopePanel.hidden = !visible;
+
+      if (!visible) {
+        branchIdEl.value = "";
+        productIdEl.value = "";
+      }
+    }
+
+    function formatBoolean(value) {
+      return value === true
+        ? "Enabled"
+        : value === false
+          ? "Blocked"
+          : "—";
+    }
+
+    function renderGovernance(governance) {
+      governanceList.innerHTML = "";
+
+      const labels = {
+        direct_database_access:
+          "Direct database access",
+
+        assistant_mutations_allowed:
+          "Assistant mutations",
+
+        automatic_supplier_selection:
+          "Automatic supplier selection",
+
+        automatic_purchase_order_creation:
+          "Automatic PO creation",
+
+        procurement_execution_allowed:
+          "Procurement execution"
+      };
+
+      for (
+        const [key, label]
+        of Object.entries(labels)
+      ) {
+        const value =
+          governance?.[key];
+
+        const row =
+          document.createElement("div");
+
+        row.className =
+          "governance-row";
+
+        const left =
+          document.createElement("span");
+
+        left.textContent =
+          label;
+
+        const right =
+          document.createElement("span");
+
+        right.textContent =
+          formatBoolean(value);
+
+        right.className =
+          value === true
+            ? "yes"
+            : "no";
+
+        row.append(left, right);
+
+        governanceList.appendChild(row);
+      }
+    }
+
+    function addAnswerBadge(
+      container,
+      label,
+      className
+    ) {
+      const badge =
+        document.createElement("span");
+
+      badge.className =
+        `answer-badge ${className}`;
+
+      badge.textContent =
+        label;
+
+      container.appendChild(badge);
+    }
+
+
+    function renderStructuredAnswer(answer) {
+      answerText.textContent = "";
+
+      const text =
+        String(
+          answer ?? "No answer returned."
+        ).trim();
+
+      if (!text) {
+        answerText.textContent =
+          "No answer returned.";
+        return;
+      }
+
+      const stack =
+        document.createElement("div");
+
+      stack.className =
+        "answer-stack";
+
+      const paragraphs =
+        text
+          .split(/\n\s*\n/)
+          .map((item) => item.trim())
+          .filter(Boolean);
+
+      for (const paragraph of paragraphs) {
+        const lower =
+          paragraph.toLowerCase();
+
+        const card =
+          document.createElement("div");
+
+        card.className =
+          "answer-card";
+
+        const title =
+          document.createElement("div");
+
+        title.className =
+          "answer-card-title";
+
+        const body =
+          document.createElement("div");
+
+        body.className =
+          "answer-card-text";
+
+        body.textContent =
+          paragraph;
+
+        if (
+          lower.includes(
+            "must not be described as live"
+          )
+          || lower.includes(
+            "synthetic_calibrated"
+          )
+        ) {
+          card.classList.add(
+            "answer-notice"
+          );
+
+          title.textContent =
+            "Data notice";
+
+        } else if (
+          lower.includes(
+            "ranking is limited"
+          )
+          || lower.includes(
+            "returned governed query"
+          )
+          || lower.includes(
+            "does not infer causes"
+          )
+          || lower.includes(
+            "does not provide a causal"
+          )
+          || lower.includes(
+            "exposed evidence supports"
+          )
+        ) {
+          card.classList.add(
+            "answer-scope"
+          );
+
+          title.textContent =
+            "Evidence scope";
+
+        } else {
+          card.classList.add(
+            "answer-result"
+          );
+
+          title.textContent =
+            "Governed result";
+        }
+
+        card.append(
+          title,
+          body
+        );
+
+        const badgeBox =
+          document.createElement("div");
+
+        badgeBox.className =
+          "answer-badges";
+
+        if (
+          /\bCRITICAL\b/i.test(paragraph)
+        ) {
+          addAnswerBadge(
+            badgeBox,
+            "CRITICAL",
+            "badge-critical"
+          );
+        }
+
+        if (
+          /\bWATCH\b/i.test(paragraph)
+        ) {
+          addAnswerBadge(
+            badgeBox,
+            "WATCH",
+            "badge-watch"
+          );
+        }
+
+        if (
+          /\bAPPROVED_DRAFT\b/i.test(paragraph)
+        ) {
+          addAnswerBadge(
+            badgeBox,
+            "APPROVED DRAFT",
+            "badge-approved"
+          );
+        }
+
+        if (
+          /\bCLOSED\b/i.test(paragraph)
+        ) {
+          addAnswerBadge(
+            badgeBox,
+            "CLOSED",
+            "badge-closed"
+          );
+        }
+
+        if (badgeBox.children.length) {
+          card.appendChild(
+            badgeBox
+          );
+        }
+
+        stack.appendChild(card);
+      }
+
+
+      const workflowPhrases = [
+        "human approval remains required",
+        "automatic execution is not allowed",
+        "does not establish supplier selection",
+        "assistant cannot select suppliers",
+        "assistant cannot approve decision cases",
+        "assistant cannot create purchase orders",
+        "assistant cannot execute procurement"
+      ];
+
+      const workflowCards =
+        Array.from(stack.children).filter(
+          (card) => {
+            const body =
+              card.querySelector(
+                ".answer-card-text"
+              );
+
+            const value =
+              (
+                body?.textContent ?? ""
+              ).toLowerCase();
+
+            return workflowPhrases.some(
+              (phrase) =>
+                value.includes(phrase)
+            );
+          }
+        );
+
+      if (workflowCards.length >= 2) {
+        const controlCard =
+          document.createElement("div");
+
+        controlCard.className =
+          "answer-card answer-controls";
+
+        const controlTitle =
+          document.createElement("div");
+
+        controlTitle.className =
+          "answer-card-title";
+
+        controlTitle.textContent =
+          "Workflow controls";
+
+        const controlBody =
+          document.createElement("div");
+
+        controlBody.className =
+          "answer-card-text";
+
+        controlBody.textContent =
+          workflowCards
+            .map(
+              (card) =>
+                card.querySelector(
+                  ".answer-card-text"
+                )?.textContent ?? ""
+            )
+            .filter(Boolean)
+            .join("\n\n");
+
+        controlCard.append(
+          controlTitle,
+          controlBody
+        );
+
+        workflowCards[0].before(
+          controlCard
+        );
+
+        workflowCards.forEach(
+          (card) => card.remove()
+        );
+      }
+
+      answerText.appendChild(stack);
+    }
+
+
+    function renderResponse(data) {
+      renderStructuredAnswer(
+        data.answer
+      );
+
+      intentValue.textContent =
+        data.intent ?? "—";
+
+
+      const provider =
+        data.provider ?? "?";
+
+      providerValue.textContent =
+        provider;
+
+      providerValue.className =
+        "meta-value provider-pill provider-other";
+
+      if (provider === "DETERMINISTIC") {
+        providerValue.className =
+          "meta-value provider-pill "
+          + "provider-deterministic";
+      } else if (provider === "OLLAMA_LOCAL") {
+        providerValue.className =
+          "meta-value provider-pill "
+          + "provider-ollama";
+      }
+
+      modelValue.textContent =
+        data.model ?? "?";
+
+      operationalValue.textContent =
+        data.data_context
+          ?.operational_context
+        ?? "—";
+
+      referenceValue.textContent =
+        data.data_context
+          ?.reference_context
+        ?? "—";
+
+      renderGovernance(
+        data.governance ?? {}
+      );
+
+      const disclosure =
+        data.data_context
+          ?.disclosure;
+
+      const answerContainsDisclosure =
+        Boolean(
+          disclosure
+          && String(
+            data.answer ?? ""
+          ).includes(disclosure)
+        );
+
+      if (
+        disclosure
+        && !answerContainsDisclosure
+      ) {
+        disclosureBox.hidden = false;
+        disclosureBox.textContent =
+          disclosure;
+      } else {
+        disclosureBox.hidden = true;
+        disclosureBox.textContent = "";
+      }
+
+    }
+
+    async function askAssistant() {
+      const question =
+        questionEl.value.trim();
+
+      if (!question) {
+        statusText.textContent =
+          "Enter a question first.";
+
+        statusText.className =
+          "status error";
+
+        return;
+      }
+
+      const payload = {
+        question
+      };
+
+      const branchId =
+        branchIdEl.value.trim();
+
+      const productId =
+        productIdEl.value.trim();
+
+      if (branchId) {
+        payload.branch_id =
+          branchId;
+      }
+
+      if (productId) {
+        payload.product_id =
+          productId;
+      }
+
+      askButton.disabled = true;
+
+      statusText.className =
+        "status";
+
+      statusText.textContent =
+        "Querying governed Stage 7O runtime...";
+
+      answerText.textContent =
+        "Working...";
+
+      const requestStartedAt =
+        performance.now();
+
+      try {
+        const response =
+          await fetch(
+            "/v1/assistant/ask",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
+              body:
+                JSON.stringify(payload)
+            }
+          );
+
+        const data =
+          await response.json();
+
+        if (!response.ok) {
+          throw new Error(
+            data.detail
+            ?? data.error
+            ?? "Assistant request failed."
+          );
+        }
+
+        renderResponse(data);
+
+        const elapsedMs =
+          Math.round(
+            performance.now()
+            - requestStartedAt
+          );
+
+        responseTimeValue.textContent =
+          elapsedMs < 1000
+            ? `${elapsedMs} ms`
+            : `${(elapsedMs / 1000).toFixed(2)} s`;
+
+        statusText.textContent =
+          `Status: ${data.status ?? "OK"} · `
+          + `Tools: ${data.tool_call_count ?? 0} · `
+          + `Read-only: ${data.read_only === true}`;
+
+      } catch (error) {
+        answerText.textContent =
+          "Request rejected or unavailable.";
+
+        statusText.textContent =
+          error.message;
+
+        statusText.className =
+          "status error";
+      } finally {
+        askButton.disabled = false;
+      }
+    }
+
+    document
+      .getElementById("samplePrompts")
+      .addEventListener(
+        "click",
+        (event) => {
+          const button =
+            event.target.closest(
+              "[data-question]"
+            );
+
+          if (!button) {
+            return;
+          }
+
+          questionEl.value =
+            button.dataset.question;
+
+          const isReorder =
+            button.dataset.question
+            === reorderQuestion;
+
+          setScopeVisible(
+            isReorder
+          );
+
+          if (isReorder) {
+            branchIdEl.value =
+              reorderBranchId;
+
+            productIdEl.value =
+              reorderProductId;
+          }
+
+          questionEl.focus();
+        }
+      );
+
+    askButton.addEventListener(
+      "click",
+      askAssistant
+    );
+
+    clearButton.addEventListener(
+      "click",
+      () => {
+        questionEl.value = "";
+        setScopeVisible(false);
+
+        answerText.textContent =
+          "Ready.";
+
+        statusText.textContent = "";
+
+        intentValue.textContent = "—";
+        providerValue.textContent = "—";
+        providerValue.className = "meta-value";
+        modelValue.textContent = "—";
+        responseTimeValue.textContent = "?";
+        operationalValue.textContent = "—";
+        referenceValue.textContent = "—";
+
+        governanceList.innerHTML =
+          `
+          <div class="governance-row">
+            <span>
+              Direct database access
+            </span>
+            <span>—</span>
+          </div>
+          `;
+
+        disclosureBox.hidden = true;
+        disclosureBox.textContent = "";
+      }
+    );
+
+    questionEl.addEventListener(
+      "keydown",
+      (event) => {
+        if (
+          event.key === "Enter"
+          && (event.ctrlKey || event.metaKey)
+        ) {
+          askAssistant();
+        }
+      }
+    );
+  </script>
+</body>
+</html>

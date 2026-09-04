@@ -1,0 +1,14 @@
+PharmStock AI Platform V2 - Stage 1C Acceptance
+
+Project target: Python >=3.14,<3.15
+Validation environment available to this build session: Python 3.13.5
+Pydantic: 2.13.4
+
+Acceptance checks:
+- Full pytest suite: 41 passed
+- Stage 1C executable flow demo: PASS
+- Python compileall for src/tests/scripts: PASS
+- Manual line-length scan against configured 100-char limit: PASS
+- Ruff CLI: not installed in the build-session environment; retained as pinned dev dependency
+
+The package metadata remains explicitly targeted to Python 3.14.x.

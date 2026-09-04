@@ -1,0 +1,110 @@
+services:
+  mlflow:
+    build:
+      context: ../..
+      dockerfile: infra/docker/stage7k/Dockerfile
+    image: pharmstock-stage7k-ml:0.32.0
+    container_name: pharmstock-stage7k-mlflow
+    command:
+      - mlflow
+      - server
+      - --host
+      - 0.0.0.0
+      - --port
+      - "5000"
+      - --backend-store-uri
+      - sqlite:////mlflow/state/mlflow.db
+      - --artifacts-destination
+      - /mlflow/artifacts
+      - --serve-artifacts
+      - --allowed-hosts
+      - "mlflow,mlflow:5000,localhost:*,127.0.0.1:*"
+      - --cors-allowed-origins
+      - "http://localhost:5001,http://127.0.0.1:5001"
+    ports:
+      - "${PHARMSTOCK_MLFLOW_PORT:-5001}:5000"
+    volumes:
+      - pharmstock-stage7k-mlflow-state:/mlflow/state
+      - pharmstock-stage7k-mlflow-artifacts:/mlflow/artifacts
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - >-
+          import urllib.request;
+          urllib.request.urlopen('http://localhost:5000/health', timeout=5).read()
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 15s
+    restart: unless-stopped
+
+  trainer:
+    build:
+      context: ../..
+      dockerfile: infra/docker/stage7k/Dockerfile
+    image: pharmstock-stage7k-ml:0.32.0
+    environment:
+      PYTHONPATH: /workspace:/workspace/src
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+      GIT_PYTHON_REFRESH: quiet
+      PHARMSTOCK_BQ_PROJECT: "${PHARMSTOCK_BQ_PROJECT:-pharmstock-ai-bq2-2026}"
+      PHARMSTOCK_BQ_LOCATION: "${PHARMSTOCK_BQ_LOCATION:-EU}"
+      PHARMSTOCK_BQ_GOLD_DATASET: "${PHARMSTOCK_BQ_GOLD_DATASET:-pharmstock_rebuild_gold}"
+      PHARMSTOCK_BQ_CURRENT_DATASET: "${PHARMSTOCK_BQ_CURRENT_DATASET:-pharmstock_ops_current}"
+      PHARMSTOCK_ML_MAX_TRAINING_ROWS: "${PHARMSTOCK_ML_MAX_TRAINING_ROWS:-500000}"
+      PHARMSTOCK_ML_MAX_QUERY_GIB: "${PHARMSTOCK_ML_MAX_QUERY_GIB:-8.0}"
+      PHARMSTOCK_BQ_WARN_GIB: "${PHARMSTOCK_BQ_WARN_GIB:-8.2}"
+      PHARMSTOCK_BQ_HARD_STOP_GIB: "${PHARMSTOCK_BQ_HARD_STOP_GIB:-8.5}"
+    volumes:
+      - ../..:/workspace
+      - type: bind
+        source: "${APPDATA}/gcloud"
+        target: /root/.config/gcloud
+        read_only: true
+    depends_on:
+      mlflow:
+        condition: service_healthy
+
+  model-serving:
+    build:
+      context: ../..
+      dockerfile: infra/docker/stage7k/Dockerfile
+    image: pharmstock-stage7k-ml:0.32.0
+    container_name: pharmstock-stage7k-serving
+    command:
+      - uvicorn
+      - ml.stage7k.serve:app
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8090"
+    environment:
+      PYTHONPATH: /workspace:/workspace/src
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+      GIT_PYTHON_REFRESH: quiet
+    ports:
+      - "${PHARMSTOCK_ML_SERVING_PORT:-8090}:8090"
+    volumes:
+      - ../..:/workspace:ro
+    depends_on:
+      mlflow:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - >-
+          import urllib.request;
+          urllib.request.urlopen('http://localhost:8090/health', timeout=5).read()
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+    restart: unless-stopped
+
+volumes:
+  pharmstock-stage7k-mlflow-state:
+  pharmstock-stage7k-mlflow-artifacts:

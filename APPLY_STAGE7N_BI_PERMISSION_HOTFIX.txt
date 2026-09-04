@@ -1,0 +1,21 @@
+PharmStock Stage 7N v0.38.0 - PostgreSQL BI decision-case permission hotfix
+
+Root cause
+----------
+bi.v_decision_case depended on decision_ops.v_case_workbench, which is intentionally
+created WITH (security_invoker = true). When Power BI connects as pharmstock_bi,
+PostgreSQL therefore checks direct permissions on decision_ops.decision_case and
+rejects the read. Granting pharmstock_bi direct access to decision_ops would violate
+the curated BI boundary.
+
+Fix
+---
+- bi.v_decision_case now builds the same read model directly from governed base tables.
+- The BI view explicitly uses security_invoker = false and remains admin-owned.
+- pharmstock_bi still has SELECT only on schema bi and no direct USAGE on decision_ops,
+  mlops, master, inventory, or procurement.
+- Stage 7N verification now runs an actual SET ROLE pharmstock_bi + LIMIT 0 read smoke
+  against all five BI views, not only has_table_privilege metadata checks.
+- Preserves the prior expiry-risk explicit-join hotfix.
+
+Expected test count: 18 passed.

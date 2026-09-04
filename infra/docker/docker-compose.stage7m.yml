@@ -1,0 +1,56 @@
+services:
+  stage7m-api:
+    container_name: pharmstock-stage7m-api
+    image: pharmstock-stage7m-api:0.37.0
+    build:
+      context: ../..
+      dockerfile: infra/docker/stage7m/Dockerfile
+    working_dir: /workspace
+    command:
+      - uvicorn
+      - operations.stage7m.api:app
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8091"
+      - --no-access-log
+    environment:
+      PYTHONPATH: /workspace:/workspace/src
+      PHARMSTOCK_STAGE7M_POSTGRES_HOST: postgres
+      PHARMSTOCK_STAGE7M_POSTGRES_PORT: "5432"
+      PHARMSTOCK_STAGE7M_POSTGRES_DB: pharmstock_ops
+      PHARMSTOCK_STAGE7M_POSTGRES_USER: pharmstock_workbench
+      PHARMSTOCK_STAGE7M_POSTGRES_PASSWORD: >-
+        ${PHARMSTOCK_WORKBENCH_PASSWORD:?PHARMSTOCK_WORKBENCH_PASSWORD must be set}
+      PHARMSTOCK_STAGE7M_VIEWER_KEY: >-
+        ${PHARMSTOCK_STAGE7M_VIEWER_KEY:?PHARMSTOCK_STAGE7M_VIEWER_KEY must be set}
+      PHARMSTOCK_STAGE7M_OPERATOR_KEY: >-
+        ${PHARMSTOCK_STAGE7M_OPERATOR_KEY:?PHARMSTOCK_STAGE7M_OPERATOR_KEY must be set}
+      PHARMSTOCK_STAGE7M_MANAGER_KEY: >-
+        ${PHARMSTOCK_STAGE7M_MANAGER_KEY:-stage7m-local-manager}
+      PHARMSTOCK_STAGE7M_ADMIN_KEY: >-
+        ${PHARMSTOCK_STAGE7M_ADMIN_KEY:-stage7m-local-admin}
+      PHARMSTOCK_STAGE7M_STAGE7L_MAX_AGE_SECONDS: "90"
+      PHARMSTOCK_STAGE7M_ARTIFACT_ROOT: artifacts/stage7m
+    volumes:
+      - ../..:/workspace
+    ports:
+      - "127.0.0.1:8091:8091"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      stage7l-workflow:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - >-
+          import urllib.request;
+          urllib.request.urlopen('http://localhost:8091/health', timeout=5).read()
+      interval: 15s
+      timeout: 8s
+      retries: 4
+      start_period: 25s
+    restart: unless-stopped

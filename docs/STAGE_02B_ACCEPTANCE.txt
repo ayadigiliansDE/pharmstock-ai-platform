@@ -1,0 +1,22 @@
+PharmStock AI Platform V2 - Stage 2B acceptance
+================================================
+Package version: 0.6.0
+
+Offline/build-environment checks:
+- pytest: 64 passed
+- compileall: PASS
+- Stage 1C checkpoint regression: PASS
+- Stage 2A checkpoint regression: PASS
+- openFDA parser/normalizer tests use recorded-shape fixtures: PASS
+
+Cross-platform target:
+- Project requires Python >=3.14,<3.15.
+- Build container used Python 3.13 for offline checks only.
+- User acceptance should be run on Windows + Python 3.14.7.
+
+Network limitation of build environment:
+- The live openFDA Stage 2B HTTP checkpoint could not be executed in the build container because outbound Internet is disabled there.
+- Live acceptance command on the user's machine:
+  python scripts\run_checkpoint.py 2b
+- Expected terminal marker:
+  STAGE_2B_STATUS=PASS

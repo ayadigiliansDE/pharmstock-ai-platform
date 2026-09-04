@@ -1,0 +1,17 @@
+PharmStock AI Platform V2 — Stage 2A Acceptance
+Date: 2026-08-22
+
+Checks performed in build environment:
+- Full pytest suite: PASS — 52 tests
+- Python compileall (src + scripts): PASS
+- Stage 1C checkpoint replay: PASS
+- Stage 2A 25-branch checkpoint: PASS
+- Stage 2A 1,000-branch run: PASS
+- 1,000 branches generated across all 27 governorates
+- Default seed 20260822 produced 149 organizations and 1,000 branches
+- Source/test/script Python files checked for configured 100-character line length: PASS
+
+Note:
+- Build environment Python is 3.13.x; project metadata intentionally requires Python >=3.14,<3.15.
+- Ruff is declared as a dev dependency but was not installed in the build container, so the Ruff binary was not executed here.
+- User local setup should run `pip install -e ".[dev]"`, then `pytest` and `ruff check .` on Python 3.14.x.

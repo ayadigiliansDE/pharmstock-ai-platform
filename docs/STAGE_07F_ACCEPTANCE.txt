@@ -1,0 +1,18 @@
+Stage 7F acceptance checkpoint
+
+Prerequisite:
+- artifacts/stage7e/_SUCCESS exists
+- Docker Desktop is running
+- Stage 7E PostgreSQL volume remains available
+
+Must pass:
+- PostgreSQL accepts logical replication
+- Debezium PostgreSQL connector reaches RUNNING
+- canonical pgoutput slot is active
+- all 14 table-specific CDC Kafka topics exist
+- isolated procurement.supplier probe emits c -> u -> d
+- emitted source schema/table and primary key match the probe
+- probe row is deleted after the check
+- no Stage 7E historical snapshot replay occurs
+- no cloud mutation occurs
+- artifacts/stage7f/_SUCCESS is written only after all checks pass

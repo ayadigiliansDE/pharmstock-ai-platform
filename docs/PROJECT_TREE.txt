@@ -1,0 +1,268 @@
+.
+./.env.example
+./.gitignore
+./README.md
+./README_STAGE2E_LINTFIX.md
+./README_STAGE2E_PATCH.md
+./README_STAGE2F1_PATCH.md
+./README_STAGE3A_LINTFIX.md
+./README_STAGE3A_PATCH.md
+./README_STAGE3C_PATCH.md
+./README_STAGE4B_PATCH.md
+./README_STAGE4B_SPARK_IMPORT_HOTFIX.md
+./README_STAGE5A_PATCH.md
+./airflow
+./airflow/dags
+./airflow/dags/.gitkeep
+./dbt
+./dbt/.gitkeep
+./docs
+./docs/ARCHITECTURE.md
+./docs/DATA_SCALE_STRATEGY.md
+./docs/EVOLUTION.md
+./docs/LOCAL_RUN_GUIDE.md
+./docs/OFFICIAL_DATA_SOURCES.md
+./docs/ORIGINAL_REFERENCE_SHA256.txt
+./docs/PROJECT_TREE.txt
+./docs/STAGE_00_FOUNDATION.md
+./docs/STAGE_01A_PRODUCT_DOMAIN.md
+./docs/STAGE_01B_PHARMACY_DOMAIN.md
+./docs/STAGE_01C_ACCEPTANCE.txt
+./docs/STAGE_01C_OPERATIONAL_DOMAIN.md
+./docs/STAGE_02A_ACCEPTANCE.txt
+./docs/STAGE_02A_PHARMACY_NETWORK.md
+./docs/STAGE_02B_ACCEPTANCE.txt
+./docs/STAGE_02B_LOCAL_RUN.md
+./docs/STAGE_02B_REAL_DRUG_CATALOG.md
+./docs/STAGE_02C_ACCEPTANCE.txt
+./docs/STAGE_02C_BRANCH_INVENTORY.md
+./docs/STAGE_02C_LOCAL_RUN.md
+./docs/STAGE_02D_ACCEPTANCE.txt
+./docs/STAGE_02D_LOCAL_RUN.md
+./docs/STAGE_02D_SCALE_FEFO.md
+./docs/STAGE_02E_ACCEPTANCE.txt
+./docs/STAGE_02E_DEMAND_SALES.md
+./docs/STAGE_02E_LOCAL_RUN.md
+./docs/STAGE_02F1_ACCEPTANCE.txt
+./docs/STAGE_02F1_LOCAL_RUN.md
+./docs/STAGE_02F1_SUPPLIER_NETWORK.md
+./docs/STAGE_02F_ACCEPTANCE.txt
+./docs/STAGE_02F_LOCAL_RUN.md
+./docs/STAGE_02F_PROCUREMENT.md
+./docs/STAGE_03A_ACCEPTANCE.txt
+./docs/STAGE_03A_KAFKA_FOUNDATION.md
+./docs/STAGE_03A_LOCAL_RUN.md
+./docs/STAGE_03B_ACCEPTANCE.txt
+./docs/STAGE_03B_LOCAL_RUN.md
+./docs/STAGE_03B_SIMULATOR_EVENT_STREAMING.md
+./docs/STAGE_03C_ACCEPTANCE.txt
+./docs/STAGE_03C_DURABLE_PROCESSING.md
+./docs/STAGE_03C_LOCAL_RUN.md
+./docs/STAGE_04A_ACCEPTANCE.txt
+./docs/STAGE_04A_LOCAL_RUN.md
+./docs/STAGE_04A_SPARK_STREAMING.md
+./docs/STAGE_04B_ACCEPTANCE.txt
+./docs/STAGE_04B_LOCAL_RUN.md
+./docs/STAGE_04B_SILVER_LAYER.md
+./docs/STAGE_05A_ACCEPTANCE.txt
+./docs/STAGE_05A_BIGQUERY_WAREHOUSE.md
+./docs/STAGE_05A_LOCAL_RUN.md
+./infra
+./infra/docker
+./infra/docker/.gitkeep
+./infra/docker/docker-compose.kafka.yml
+./infra/docker/docker-compose.spark.yml
+./infra/terraform
+./infra/terraform/.gitkeep
+./powerbi
+./powerbi/.gitkeep
+./pyproject.toml
+./scripts
+./scripts/.gitkeep
+./scripts/demo_stage1c_flow.py
+./scripts/run_checkpoint.py
+./scripts/run_stage2a_network.py
+./scripts/run_stage2b_catalog.py
+./scripts/run_stage2c_inventory.py
+./scripts/run_stage2d_checkpoint.py
+./scripts/run_stage2d_fefo_demo.py
+./scripts/run_stage2d_scale.py
+./scripts/run_stage2e_checkpoint.py
+./scripts/run_stage2e_demand.py
+./scripts/run_stage2f1_checkpoint.py
+./scripts/run_stage2f1_supplier_network.py
+./scripts/run_stage2f_checkpoint.py
+./scripts/run_stage2f_procurement.py
+./scripts/run_stage3a_checkpoint.py
+./scripts/run_stage3a_consumer.py
+./scripts/run_stage3a_producer.py
+./scripts/run_stage3a_topics.py
+./scripts/run_stage3b_checkpoint.py
+./scripts/run_stage3b_consumer.py
+./scripts/run_stage3b_stream.py
+./scripts/run_stage3c_checkpoint.py
+./scripts/run_stage3c_processor.py
+./scripts/run_stage4a_checkpoint.py
+./scripts/run_stage4a_spark.py
+./scripts/run_stage4b_checkpoint.py
+./scripts/run_stage4b_spark.py
+./scripts/run_stage5a_bigquery_load.py
+./scripts/run_stage5a_checkpoint.py
+./scripts/run_stage5a_spark.py
+./scripts/stage3a_common.py
+./spark
+./spark/jobs
+./spark/jobs/stage4a_bronze.py
+./spark/jobs/stage4b_silver.py
+./spark/jobs/stage5a_warehouse_export.py
+./src
+./src/pharmstock
+./src/pharmstock/__init__.py
+./src/pharmstock/ai
+./src/pharmstock/ai/__init__.py
+./src/pharmstock/analytics
+./src/pharmstock/analytics/__init__.py
+./src/pharmstock/analytics/bronze.py
+./src/pharmstock/analytics/silver.py
+./src/pharmstock/analytics/silver_contracts.py
+./src/pharmstock/common
+./src/pharmstock/common/__init__.py
+./src/pharmstock/domain
+./src/pharmstock/domain/__init__.py
+./src/pharmstock/domain/batches.py
+./src/pharmstock/domain/demand.py
+./src/pharmstock/domain/events.py
+./src/pharmstock/domain/inventory.py
+./src/pharmstock/domain/pharmacy.py
+./src/pharmstock/domain/procurement.py
+./src/pharmstock/domain/product.py
+./src/pharmstock/domain/transactions.py
+./src/pharmstock/ingestion
+./src/pharmstock/ingestion/__init__.py
+./src/pharmstock/ingestion/openfda_ndc.py
+./src/pharmstock/ml
+./src/pharmstock/ml/__init__.py
+./src/pharmstock/simulation
+./src/pharmstock/simulation/__init__.py
+./src/pharmstock/simulation/demand.py
+./src/pharmstock/simulation/geography.py
+./src/pharmstock/simulation/inventory.py
+./src/pharmstock/simulation/inventory_streaming.py
+./src/pharmstock/simulation/network.py
+./src/pharmstock/simulation/procurement.py
+./src/pharmstock/simulation/suppliers.py
+./src/pharmstock/streaming
+./src/pharmstock/streaming/__init__.py
+./src/pharmstock/streaming/kafka.py
+./src/pharmstock/streaming/processing.py
+./src/pharmstock/streaming/replay.py
+./src/pharmstock/streaming/serialization.py
+./src/pharmstock/streaming/topics.py
+./src/pharmstock/warehouse
+./src/pharmstock/warehouse/__init__.py
+./src/pharmstock/warehouse/bigquery_contracts.py
+./src/pharmstock/warehouse/bigquery_plan.py
+./tests
+./tests/fixtures
+./tests/fixtures/openfda_ndc_sample.json
+./tests/test_bigquery_warehouse_contract.py
+./tests/test_bronze_contract.py
+./tests/test_demand_domain.py
+./tests/test_demand_simulation.py
+./tests/test_durable_processing.py
+./tests/test_event_contracts.py
+./tests/test_fefo_batches.py
+./tests/test_initial_inventory_simulator.py
+./tests/test_inventory_domain.py
+./tests/test_kafka_contracts.py
+./tests/test_openfda_ndc_ingestion.py
+./tests/test_operational_event_replay.py
+./tests/test_pharmacy_domain.py
+./tests/test_pharmacy_network_simulator.py
+./tests/test_procurement_domain.py
+./tests/test_procurement_simulation.py
+./tests/test_product_domain.py
+./tests/test_project_smoke.py
+./tests/test_silver_contract.py
+./tests/test_simulation_geography.py
+./tests/test_streaming_inventory_export.py
+./tests/test_supplier_network.py
+./tests/test_transaction_domain.py
+./warehouse
+./warehouse/bigquery
+./warehouse/bigquery/README.md
+
+
+Stage 5C additions:
+  dbt/pharmstock_analytics/
+    dbt_project.yml
+    models/staging/
+    models/intermediate/
+    models/marts/
+    tests/
+  dbt/profiles/profiles.yml
+  scripts/run_stage5c_checkpoint.py
+  scripts/run_stage5c_dbt.py
+  src/pharmstock/analytics/dbt_stage.py
+  docs/STAGE_05C_DBT_ANALYTICS.md
+  docs/STAGE_05C_LOCAL_RUN.md
+  docs/STAGE_05C_ACCEPTANCE.txt
+
+Stage 5D additions:
+  src/pharmstock/masterdata/stage5d.py
+  src/pharmstock/masterdata/bigquery_cloud.py
+  src/pharmstock/analytics/dimensions_stage.py
+  scripts/run_stage5d_checkpoint.py
+  scripts/run_stage5d_bigquery.py
+  scripts/run_stage5d_dimensions.py
+  dbt/pharmstock_analytics/models/master_staging/
+  dbt/pharmstock_analytics/models/dimensions/
+
+Stage 6A additions:
+  powerbi/README.md
+  powerbi/measures.dax
+  powerbi/bigquery_connection.template.m
+  powerbi/semantic_model_contract.template.json
+  scripts/run_stage6a_checkpoint.py
+  scripts/run_stage6a_powerbi.py
+  src/pharmstock/analytics/powerbi_stage.py
+  dbt/pharmstock_analytics/models/powerbi_serving/
+  docs/STAGE_06A_POWERBI_SERVING.md
+  docs/STAGE_06A_LOCAL_RUN.md
+  docs/STAGE_06A_ACCEPTANCE.txt
+
+Stage 7A additions
+------------------
+src/pharmstock/ingestion/egypt_market_drugs.py
+scripts/run_stage7a_egypt_master.py
+tests/test_egypt_market_drugs.py
+tests/fixtures/egypt_market_drugs_sample.csv
+docs/STAGE_07A_EGYPTIAN_PHARMA_MASTER.md
+docs/STAGE_07A_LOCAL_RUN.md
+docs/STAGE_07A_ACCEPTANCE.txt
+README_STAGE7A_PATCH.md
+
+Stage 7C additions
+------------------
+src/pharmstock/finance/                 pricing and finance calibration contracts
+scripts/run_stage7c_financial.py        visible Stage 7C checkpoint
+docs/STAGE_07C_PRODUCTION_FINANCIAL_ENGINE.md
+docs/STAGE_07C_LOCAL_RUN.md
+docs/STAGE_07C_ACCEPTANCE.txt
+tests/test_financial_pricing_engine.py
+
+Stage 7D additions
+------------------
+infra/docker/docker-compose.postgres.yml
+infra/docker/postgres/sql/001_schema.sql
+infra/docker/postgres/sql/002_roles_and_cdc.sql
+infra/docker/postgres/sql/003_load_stage7d.sql
+infra/docker/postgres/sql/004_verify_stage7d.sql
+src/pharmstock/onprem/__init__.py
+src/pharmstock/onprem/contracts.py
+scripts/run_stage7d_onprem.py
+tests/test_onprem_postgres_contract.py
+docs/STAGE_07D_ONPREM_POSTGRESQL.md
+docs/STAGE_07D_LOCAL_RUN.md
+docs/STAGE_07D_ACCEPTANCE.txt
+README_STAGE7D_PATCH.md

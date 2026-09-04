@@ -1,0 +1,12 @@
+Stage 3B offline acceptance
+- Python compileall: PASS
+- pytest: 142 passed
+- large artifact conversion: PASS
+- event candidates built: 83,132
+- unique event IDs: 83,132
+- duplicate event IDs: 0
+- sales topic events: 38,476
+- inventory topic events: 42,312
+- procurement topic events: 2,344
+- dead letters in validated offline replay: 0
+- live Kafka broker integration: must be verified on the user's Windows/Docker checkpoint

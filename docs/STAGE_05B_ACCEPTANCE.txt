@@ -1,0 +1,11 @@
+Stage 5B acceptance
+- Local checkpoint requires Stage 5A _SUCCESS.
+- Seven warehouse tables and expected row counts are discovered from Stage 5A.
+- Default checkpoint performs zero cloud mutation.
+- Cloud client is optional, not a core runtime dependency.
+- Live loader requires --execute + --replace + configured project.
+- Live loader uses ADC and per-table staging tables.
+- Staging row count is verified before target promotion.
+- Staging accepts Parquet physical nullability; REQUIRED values are checked before promotion.
+- Promotion uses CREATE OR REPLACE with explicit NOT NULL contract.
+- Target schema, partition field, clustering fields, and row counts are verified.

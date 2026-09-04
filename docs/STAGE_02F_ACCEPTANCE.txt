@@ -1,0 +1,29 @@
+Stage 2F reference acceptance
+=============================
+
+Package version: 0.10.0
+Python target: >=3.14,<3.15
+Test suite: 114 passed
+Compile check: PASS
+
+Reference large acceptance input:
+- Stage 2E branches: 25
+- Stage 2E inventory rows: 58,134
+- Stage 2E ending units: 653,389
+
+Stage 2F reference output:
+- Synthetic suppliers: 6
+- Purchase orders: 75
+- Purchase-order lines: 1,918
+- Ordered units: 17,729
+- Received units: 17,729
+- Restock movements: 1,918
+- Final units: 671,118
+- Final batch units: 671,118
+- Inventory reconciliation: PASS
+- Batch reconciliation: PASS
+- _SUCCESS: PASS
+
+Note: user-machine counts can differ because their Stage 2E demand run produced a different
+deterministic dataset/count set than this reference acceptance. The invariants and PASS markers
+are the acceptance contract.

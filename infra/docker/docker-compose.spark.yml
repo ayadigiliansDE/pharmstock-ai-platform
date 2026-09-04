@@ -1,0 +1,46 @@
+services:
+  spark-stage4a:
+    image: apache/spark:4.2.0-python3
+    profiles: ["stage4a"]
+    user: "0:0"
+    working_dir: /opt/pharmstock
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:19092
+      PYTHONPATH: /opt/pharmstock/src
+      SPARK_STAGE4A_OUTPUT: /opt/pharmstock/artifacts/stage4a
+      SPARK_STAGE4A_CHECKPOINT: /opt/pharmstock/artifacts/stage4a/spark_checkpoint
+      SPARK_STAGE4A_STARTING_OFFSETS: earliest
+      SPARK_STAGE4A_MAX_OFFSETS_PER_TRIGGER: "2000"
+    volumes:
+      - ../../:/opt/pharmstock
+      - spark-stage4a-ivy:/root/.ivy2
+    depends_on:
+      kafka:
+        condition: service_healthy
+
+  spark-stage4b:
+    image: apache/spark:4.2.0-python3
+    profiles: ["stage4b"]
+    user: "0:0"
+    working_dir: /opt/pharmstock
+    environment:
+      PYTHONPATH: /opt/pharmstock/src
+      SPARK_STAGE4B_BRONZE: /opt/pharmstock/artifacts/stage4a/bronze
+      SPARK_STAGE4B_OUTPUT: /opt/pharmstock/artifacts/stage4b
+    volumes:
+      - ../../:/opt/pharmstock
+
+  spark-stage5a:
+    image: apache/spark:4.2.0-python3
+    profiles: ["stage5a"]
+    user: "0:0"
+    working_dir: /opt/pharmstock
+    environment:
+      PYTHONPATH: /opt/pharmstock/src
+      SPARK_STAGE5A_SILVER: /opt/pharmstock/artifacts/stage4b/silver
+      SPARK_STAGE5A_OUTPUT: /opt/pharmstock/artifacts/stage5a
+    volumes:
+      - ../../:/opt/pharmstock
+
+volumes:
+  spark-stage4a-ivy:

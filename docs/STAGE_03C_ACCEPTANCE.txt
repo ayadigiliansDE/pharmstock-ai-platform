@@ -1,0 +1,8 @@
+Stage 3C acceptance target
+==========================
+Version: 0.13.0
+Unit/regression tests: 150 passed
+Static check target: ruff check . -> All checks passed!
+Integration checkpoint: python scripts\run_checkpoint.py 3c
+Expected durable outcomes: 100 processed / 100 duplicate / 2 failed+DLQ
+Expected final marker: STAGE_3C_STATUS=PASS

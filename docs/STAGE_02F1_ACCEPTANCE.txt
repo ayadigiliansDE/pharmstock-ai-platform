@@ -1,0 +1,19 @@
+Stage 2F.1 acceptance checkpoint
+Date: 2026-08-22
+
+Test suite: 123 passed
+Compileall: PASS
+Reference Stage 2E input: 25 branches / 1,918 reorder-trigger product lines
+Scaled synthetic supplier network: 153 suppliers
+Supplier types: 12 national, 24 regional, 81 local, 24 direct manufacturers, 12 cold-chain specialists
+Preferred panel per branch: 12 suppliers
+Suppliers used by 25-branch acceptance cycle: 71
+Purchase orders: 213
+Purchase-order lines: 1,918
+Ordered units: 17,729
+Received units: 17,729
+Deferred units: 0
+Restock movements: 1,918
+Final marker: STAGE_2F1_STATUS=PASS
+
+Ruff executable was not available in the build container; run `ruff check .` on the target Windows Python 3.14 environment as the final static-quality acceptance.

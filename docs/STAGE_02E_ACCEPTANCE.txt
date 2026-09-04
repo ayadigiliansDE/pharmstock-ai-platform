@@ -1,0 +1,37 @@
+Stage 2E acceptance checkpoint
+==============================
+
+Unit/integration test suite in the aligned v0.9.0 build:
+100 passed
+compileall: PASS
+
+Large functional acceptance:
+- Catalog: 9,042 package SKUs
+- Branches: 25
+- Simulation horizon: 7 days from 2026-08-22
+- Input Stage 2D stock units: 704,588
+- Baskets: 28,164
+- Demand lines: 42,990
+- Requested units: 57,656
+- Fulfilled units: 51,199
+- Lost units: 6,457
+- Unit fulfillment rate: 88.80%
+- Reorder triggers: 1,918
+- Output partitions: 5
+- Ending stock units: 653,389
+- FEFO allocated units: 51,199
+- Stock movement delta: -51,199
+- Daily KPI rows: 175 (= 25 branches x 7 days)
+- _SUCCESS: written only after completion
+
+Reconciliation:
+704,588 initial - 51,199 fulfilled = 653,389 ending
+FEFO allocated units = fulfilled units = 51,199
+Stock movement quantity delta = -51,199
+
+STAGE_2E_STATUS=PASS
+ACCEPTANCE_RECONCILIATION=PASS
+
+Important truth boundary:
+Demand is structured synthetic simulation, not measured Egyptian sales/disease data.
+Monetary values/prices are not generated.

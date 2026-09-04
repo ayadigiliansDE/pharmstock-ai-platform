@@ -1,0 +1,22 @@
+services:
+  spark-stage7i:
+    image: apache/spark:4.2.0-python3
+    profiles: ["stage7i"]
+    user: "0:0"
+    working_dir: /opt/pharmstock
+    environment:
+      PYTHONPATH: /opt/pharmstock/src
+      KAFKA_BOOTSTRAP_SERVERS: kafka:19092
+      PHARMSTOCK_STAGE7I_BATCH_ID: "${PHARMSTOCK_STAGE7I_BATCH_ID:-unset}"
+      SPARK_STAGE7I_BATCH_ROOT: "${SPARK_STAGE7I_BATCH_ROOT:-/opt/pharmstock/artifacts/stage7i/batches/unset}"
+      SPARK_STAGE7I_START_OFFSETS: "${SPARK_STAGE7I_START_OFFSETS:-/opt/pharmstock/artifacts/stage7i/batches/unset/start_offsets.json}"
+      SPARK_STAGE7I_END_OFFSETS: "${SPARK_STAGE7I_END_OFFSETS:-/opt/pharmstock/artifacts/stage7i/batches/unset/end_offsets.json}"
+    volumes:
+      - ../../:/opt/pharmstock
+      - spark-stage7i-ivy:/root/.ivy2
+    depends_on:
+      kafka:
+        condition: service_healthy
+
+volumes:
+  spark-stage7i-ivy:

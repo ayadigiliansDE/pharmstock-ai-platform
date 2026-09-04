@@ -1,0 +1,30 @@
+{
+  "patch": "PHARMSTOCK_STAGE7K5_V0350_DEMAND_CDC_PREREQUISITE",
+  "stage": "7K.5 prerequisite",
+  "purpose": "Add authoritative demand_attempt to live CDC and safely migrate legacy 13-topic Stage 7I offsets to 14 topics.",
+  "cloud_mutation_by_patch": false,
+  "historical_debezium_snapshot": false,
+  "changed_files": [
+    "src/pharmstock/onprem/contracts.py",
+    "src/pharmstock/onprem/__init__.py",
+    "src/pharmstock/rebuild/contracts.py",
+    "src/pharmstock/cdc/stage7i.py",
+    "infra/docker/postgres/sql/005_stage7e_support.sql",
+    "scripts/run_stage7f_cdc.py",
+    "scripts/run_stage7i_cdc.py",
+    "tests/test_onprem_postgres_contract.py",
+    "tests/test_stage7f_cdc.py",
+    "tests/test_stage7i_cdc.py",
+    "docs/STAGE7K5_STREAMING_ML_DESIGN.md",
+    "docs/STAGE_07F_ACCEPTANCE.txt",
+    "docs/STAGE_07G_ACCEPTANCE.txt",
+    "docs/STAGE_07G_LARGE_SCALE_REBUILD.md",
+    "docs/STAGE_07I_CONTINUOUS_CDC_BIGQUERY.md",
+    "README_STAGE7K5_V0350_DEMAND_CDC_PREREQUISITE.md"
+  ],
+  "local_validation": {
+    "pytest_stage7_and_onprem": "122 passed",
+    "compileall": "PASS",
+    "ruff": "NOT AVAILABLE IN HANDOFF RUNTIME; MUST RUN IN USER .venv"
+  }
+}

@@ -1,0 +1,10 @@
+PharmStock Stage 7N v0.38.0 - PostgreSQL Expiry Join Hotfix V2
+
+IMPORTANT: This V2 archive is rooted directly at infra/ and tests/.
+Extract it directly into the project root and choose Replace/Overwrite.
+
+Expected verification after extraction:
+- tests/test_stage7n_powerbi_prod.py contains 16 tests.
+- infra/docker/postgres/sql/012_stage7n_powerbi_readonly.sql must NOT contain:
+  JOIN inventory.stock_batch sb USING (batch_id)
+- expiry view uses explicit ON joins for batch_id + branch_id + product_id.

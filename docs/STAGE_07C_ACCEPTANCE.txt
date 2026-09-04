@@ -1,0 +1,14 @@
+Stage 7C acceptance
+===================
+
+PASS requires:
+- every Stage 7A accepted product has a positive EGP retail price
+- retail-price provenance stays PUBLIC_MARKET_EGYPT
+- every purchase cost is positive, <= retail price, and SYNTHETIC_CALIBRATED
+- modeled gross margin stays inside declared simulation ranges
+- every Stage 7B branch receives a commercial policy
+- payment shares reconcile to 1.0000
+- sample transaction lines reconcile gross -> discount -> net -> COGS -> gross profit
+- no official pharmacist-margin percentage is claimed
+- no universal medicine tax/VAT rate is inferred
+- no cloud mutation is performed

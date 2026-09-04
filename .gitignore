@@ -1,0 +1,73 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Virtual environments
+.venv/
+venv/
+
+# Secrets / local configuration
+.env
+*.key
+*.pem
+*service-account*.json
+
+# Data / model artifacts
+data/
+artifacts/
+models/
+mlruns/
+chroma_db/
+checkpoints/
+
+# dbt generated files
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+
+# Airflow local state
+airflow/logs/
+airflow/airflow.db
+airflow/webserver_config.py
+
+# Power BI local/generated files
+*.pbix
+*.pbit
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Generated local simulation outputs
+/artifacts/
+
+# Python local environment / caches
+.coverage
+htmlcov/
+
+# Python packaging artifacts
+build/
+dist/
+
+# dbt generated/local artifacts
+dbt/**/target/
+dbt/**/logs/
+dbt/profiles/.user.yml
+
+# Local secrets
+
+# Runtime / generated artifacts
+artifacts/**
+!artifacts/README.md
+!artifacts/.gitkeep
+
+# Local handoff / archive files
+*-chat-handoff.zip
+
+# dbt runtime logs

@@ -1,0 +1,13 @@
+STAGE 7A ACCEPTANCE — EGYPTIAN PHARMACEUTICAL MASTER
+
+[ ] package version is 0.22.0
+[ ] pytest passes
+[ ] Ruff passes
+[ ] source snapshot has >= 20,000 accepted medicines
+[ ] accepted products have scientific composition and positive EGP price
+[ ] product IDs / market keys are unique
+[ ] synthetic product rows = 0
+[ ] price observations equal accepted product count
+[ ] EDA registration / GTIN fields remain pending unless officially verified
+[ ] source SHA-256 and provenance are recorded
+[ ] STAGE_7A_STATUS=PASS

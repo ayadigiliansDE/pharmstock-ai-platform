@@ -1,0 +1,132 @@
+{
+  "patch": "stage7k-v0.33.1",
+  "cumulative_from": "v0.32.2",
+  "supersedes": "v0.33.0",
+  "root_relative": true,
+  "cloud_mutation": false,
+  "billing_change": false,
+  "mlflow_version": "3.15.2",
+  "default_feature_row_budget": 500000,
+  "files": [
+    {
+      "path": "src/pharmstock/ml/stage7k.py",
+      "sha256": "76a273cf8d5a55daa6ea4b722a68cd280f0a3568667710ded35eea773981e766",
+      "bytes": 28295
+    },
+    {
+      "path": "src/pharmstock/ml/cloud_ready.py",
+      "sha256": "cf6a426950460d99d3a35efd24874f3b652373225941a2551e20f5e596cea43e",
+      "bytes": 2879
+    },
+    {
+      "path": ".env.example",
+      "sha256": "0b01558d62f1ba500fc1cbbbe1755e356578c60816e5d35bbc1acd4a7712c32b",
+      "bytes": 3906
+    },
+    {
+      "path": "README_STAGE7K_V0331_SCALE_EVAL_MLFLOW.md",
+      "sha256": "eb0c2eb4a8bbc2aca1ffa72ec7424d1664925486a3ea91a5ad68bc4ac6cc3cb5",
+      "bytes": 3357
+    },
+    {
+      "path": "APPLY_STAGE_7K3_7K4_README.txt",
+      "sha256": "dd660110c3934515efacfa1a63b132292b0adff934b77faf713877ad9b0ab414",
+      "bytes": 1049
+    },
+    {
+      "path": "infra/docker/stage7k/requirements.txt",
+      "sha256": "71f816572739eded367572cd25617e08e1f684bca51db68c655be0fa295b767a",
+      "bytes": 182
+    },
+    {
+      "path": "infra/docker/docker-compose.stage7k.yml",
+      "sha256": "32ee644b80f1c7e5c4fc2c09a01a77f4e4436e6ceada766a49d1695efdfb3e34",
+      "bytes": 3000
+    },
+    {
+      "path": "infra/terraform/stage7k_cloud_ready/versions.tf",
+      "sha256": "4b505475e7f3d137ea13224698054bebde3e4dcbb0b0c0a59ee6dd64a0782ed3",
+      "bytes": 229
+    },
+    {
+      "path": "infra/terraform/stage7k_cloud_ready/outputs.tf",
+      "sha256": "0bd1995020ba2664e1b78c6657769056ab09bae1ee24de9bee5fc56221a7f8b8",
+      "bytes": 649
+    },
+    {
+      "path": "infra/terraform/stage7k_cloud_ready/main.tf",
+      "sha256": "e69cd776032595987ece209101f7fba27744202a6155e35a746366416ff71ee4",
+      "bytes": 3023
+    },
+    {
+      "path": "infra/terraform/stage7k_cloud_ready/README.md",
+      "sha256": "ec7a8f5c4e41c64a9cb4b90f40f9f171a4150c68e2858107d84054118c07d416",
+      "bytes": 1079
+    },
+    {
+      "path": "infra/terraform/stage7k_cloud_ready/terraform.tfvars.example",
+      "sha256": "b51912af2ddc98f8a8a61c284a4c078471cf109765e8fc9acd90e479adfd82c3",
+      "bytes": 314
+    },
+    {
+      "path": "infra/terraform/stage7k_cloud_ready/variables.tf",
+      "sha256": "68e2cabcf6de7871b3cabb22a860820dd2d6697f36ba8004a73240347afea4e2",
+      "bytes": 906
+    },
+    {
+      "path": "scripts/export_stage7k_cloud_bundle.py",
+      "sha256": "6e109699b4b59355095acee4a1d0d1622c3819d0a78bb09007fdec19a498c43f",
+      "bytes": 3623
+    },
+    {
+      "path": "scripts/run_stage7k_cloud_ready.py",
+      "sha256": "3b6e8c01b236b0a53d8e24c680989dc58eefd2699107895428050674ffaed61d",
+      "bytes": 2625
+    },
+    {
+      "path": "scripts/run_stage7k.py",
+      "sha256": "c2f35cf281c3cd8a50c0d611bc2d4608dedfc9680fe33d0cc24dd8d638943b3b",
+      "bytes": 12590
+    },
+    {
+      "path": "ml/stage7k/cloud_serve.py",
+      "sha256": "a76a585665f840ab1800ab6034ed893ea0aff4c583fa3715d459e334d616d6ba",
+      "bytes": 2810
+    },
+    {
+      "path": "ml/stage7k/models.py",
+      "sha256": "8498cbb84695a6bb01aa993fd0e20eb70717991c4cd722b9d01295077473adde",
+      "bytes": 7318
+    },
+    {
+      "path": "ml/stage7k/train.py",
+      "sha256": "8c7b0b76a61581123f201300c2531f45433e26e1aaa83a550af0fe8761bec024",
+      "bytes": 42599
+    },
+    {
+      "path": "ml/stage7k/serve.py",
+      "sha256": "089a55645c99eed1e6ee2300c6b7c350379913080ca8be778c5b23cf9de4a248",
+      "bytes": 5553
+    },
+    {
+      "path": "ml/stage7k/vertex_serve.py",
+      "sha256": "582247386539a105ae9c214b32cd2931c4ce3c7b05adb30c0a7e127adfbe1a91",
+      "bytes": 3322
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "f9b7830417cb8ab2b485475171a5c409ea9e72a2ece6240ea5faf2aa370e6213",
+      "bytes": 918
+    },
+    {
+      "path": "tests/test_stage7k_ml.py",
+      "sha256": "53e4216aceb78d00d3afce0791bb031b6a3aa2e5f0d6e726bf4b5755d14b5c32",
+      "bytes": 7269
+    },
+    {
+      "path": "docs/STAGE7K5_STREAMING_ML_DESIGN.md",
+      "sha256": "3a282d04b96948c39d4b7b493c7845af85ca1f36bea2bbfe2213cad650b30369",
+      "bytes": 1810
+    }
+  ]
+}

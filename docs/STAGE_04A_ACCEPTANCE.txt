@@ -1,0 +1,20 @@
+PHARMSTOCK V2 — STAGE 4A ACCEPTANCE
+
+Package version: 0.14.0
+Unit-test target: 162 passed
+Static quality target: ruff check . -> All checks passed!
+
+Runtime:
+- Apache Spark 4.2.0
+- apache/spark:4.2.0-python3
+- spark-sql-kafka-0-10_2.13:4.2.0
+- Kafka host listener: localhost:9092
+- Kafka Docker listener: kafka:19092
+
+Required integration markers:
+- STAGE_4A_SPARK_STATUS=PASS on each Spark pass
+- first pass sees the published probe
+- malformed probe reaches quarantine
+- second pass consumes 0 old Kafka rows
+- duplicate (topic, partition, offset) positions = 0
+- STAGE_4A_STATUS=PASS

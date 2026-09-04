@@ -1,0 +1,43 @@
+services:
+  stage7l-workflow:
+    build:
+      context: ../..
+      dockerfile: infra/docker/stage7l/Dockerfile
+    image: pharmstock-stage7l-workflow:0.36.0
+    container_name: pharmstock-stage7l-workflow
+    command:
+      - python
+      - -m
+      - operations.stage7l.worker
+    environment:
+      PYTHONPATH: /workspace:/workspace/src
+      KAFKA_BOOTSTRAP_SERVERS: kafka:19092
+      PHARMSTOCK_POSTGRES_HOST: postgres
+      PHARMSTOCK_POSTGRES_INTERNAL_PORT: "5432"
+      PHARMSTOCK_POSTGRES_DB: pharmstock_ops
+      PHARMSTOCK_STAGE7L_POSTGRES_USER: pharmstock_decision
+      PHARMSTOCK_STAGE7L_POSTGRES_PASSWORD: >-
+        ${PHARMSTOCK_DECISION_PASSWORD:?PHARMSTOCK_DECISION_PASSWORD must be set}
+      PHARMSTOCK_STAGE7L_CONSUMER_GROUP: >-
+        ${PHARMSTOCK_STAGE7L_CONSUMER_GROUP:-pharmstock-stage7l-workflow-v1}
+      PHARMSTOCK_STAGE7L_MAX_PROCESSING_BACKOFF_SECONDS: >-
+        ${PHARMSTOCK_STAGE7L_MAX_PROCESSING_BACKOFF_SECONDS:-30}
+      PHARMSTOCK_STAGE7L_HEARTBEAT_MAX_AGE_SECONDS: >-
+        ${PHARMSTOCK_STAGE7L_HEARTBEAT_MAX_AGE_SECONDS:-45}
+      PHARMSTOCK_STAGE7L_ARTIFACT_ROOT: artifacts/stage7l
+    volumes:
+      - ../..:/workspace
+    depends_on:
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      stage7k5-online:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-m", "operations.stage7l.worker", "--healthcheck"]
+      interval: 15s
+      timeout: 10s
+      retries: 4
+      start_period: 30s
+    restart: unless-stopped

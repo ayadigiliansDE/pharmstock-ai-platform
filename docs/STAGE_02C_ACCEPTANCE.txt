@@ -1,0 +1,16 @@
+PharmStock V2 Stage 2C acceptance
+
+- package version: 0.7.0
+- test suite: 72 passed
+- Python compileall: PASS
+- 25-branch runner with 300-product synthetic acceptance catalog: PASS
+- 25-branch benchmark with 9,042-product synthetic acceptance catalog: PASS
+- 9,042-product benchmark result: 58,134 branch-product rows, 115,444 batch rows
+- initial stock respects each branch storage_capacity_units: PASS
+- assortment respects each branch assortment_capacity_skus: PASS
+- mapping truth label: synthetic_cross_market_mapping
+- prices generated: NO
+
+Note: the 9,042-product benchmark uses synthetic Product fixtures solely to validate scale
+and algorithm behavior offline. The user's Stage 2B local artifact remains the real
+openFDA-derived catalog for their local Stage 2C run.

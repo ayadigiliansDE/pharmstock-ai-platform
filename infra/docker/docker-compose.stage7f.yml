@@ -1,0 +1,28 @@
+services:
+  connect:
+    image: quay.io/debezium/connect:3.6
+    hostname: connect
+    container_name: pharmstock-connect
+    ports:
+      - "${PHARMSTOCK_CONNECT_PORT:-8083}:8083"
+    environment:
+      BOOTSTRAP_SERVERS: "kafka:19092"
+      GROUP_ID: "pharmstock-connect-stage7f"
+      CONFIG_STORAGE_TOPIC: "pharmstock.connect.configs"
+      OFFSET_STORAGE_TOPIC: "pharmstock.connect.offsets"
+      STATUS_STORAGE_TOPIC: "pharmstock.connect.statuses"
+      CONFIG_STORAGE_REPLICATION_FACTOR: "1"
+      OFFSET_STORAGE_REPLICATION_FACTOR: "1"
+      STATUS_STORAGE_REPLICATION_FACTOR: "1"
+      KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      KEY_CONVERTER_SCHEMAS_ENABLE: "false"
+      VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
+      REST_HOST_NAME: "0.0.0.0"
+      REST_ADVERTISED_HOST_NAME: "connect"
+    depends_on:
+      kafka:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped

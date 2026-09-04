@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PharmStock Decision Workbench</title>
+  <style>
+    :root { font-family: Inter, system-ui, sans-serif; color-scheme: light; }
+    body { margin: 0; background: #f5f7fa; color: #18212b; }
+    header { padding: 18px 24px; background: #101820; color: white; }
+    main { padding: 20px; max-width: 1500px; margin: auto; }
+    .toolbar, .cards { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+    .card { background: white; border: 1px solid #dce3ea; border-radius: 10px; padding: 14px; }
+    .metric { min-width: 150px; }
+    .metric strong { display: block; font-size: 24px; }
+    input, select, button { padding: 9px 11px; border: 1px solid #b9c5d1; border-radius: 7px; }
+    button { cursor: pointer; background: white; }
+    button.primary { background: #101820; color: white; }
+    table { width: 100%; border-collapse: collapse; background: white; }
+    th, td { padding: 10px; border-bottom: 1px solid #e5e9ee; text-align: left; font-size: 13px; }
+    th { background: #eef2f6; position: sticky; top: 0; }
+    .scroll { overflow: auto; max-height: 62vh; border: 1px solid #dce3ea; border-radius: 10px; }
+    .status { font-weight: 700; }
+    .error { color: #a21d1d; white-space: pre-wrap; }
+    .muted { color: #667788; font-size: 13px; }
+    dialog { width: min(760px, 92vw); border: 0; border-radius: 12px; padding: 20px; }
+    pre { background: #f3f5f7; padding: 12px; overflow: auto; max-height: 40vh; }
+  </style>
+</head>
+<body>
+<header>
+  <strong>PharmStock Operational Decision Workbench</strong>
+  <div class="muted">Governed human review. No automatic supplier selection or PO creation.</div>
+</header>
+<main>
+  <section class="toolbar card">
+    <input id="apiKey" type="password" placeholder="API key" autocomplete="off">
+    <select id="statusFilter">
+      <option value="">All statuses</option>
+      <option>OPEN</option><option>ACKNOWLEDGED</option><option>APPROVED_DRAFT</option>
+      <option>REJECTED</option><option>CLOSED</option>
+    </select>
+    <select id="typeFilter">
+      <option value="">All decision types</option>
+      <option>STOCKOUT</option><option>REORDER</option><option>EXPIRY</option>
+    </select>
+    <button class="primary" onclick="refreshAll()">Refresh</button>
+    <span id="message" class="muted"></span>
+  </section>
+
+  <section class="cards" id="metrics"></section>
+  <section class="scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Severity</th><th>Type</th><th>Status</th><th>Branch</th><th>Product</th>
+          <th>Recommended</th><th>Model</th><th>Updated</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="cases"></tbody>
+    </table>
+  </section>
+  <p id="error" class="error"></p>
+</main>
+<dialog id="detailDialog">
+  <button onclick="detailDialog.close()">Close</button>
+  <pre id="detail"></pre>
+</dialog>
+<script>
+const apiKey = document.getElementById('apiKey');
+apiKey.value = sessionStorage.getItem('pharmstockStage7mKey') || '';
+apiKey.addEventListener('change', () => sessionStorage.setItem('pharmstockStage7mKey', apiKey.value));
+
+async function api(path, options = {}) {
+  const headers = Object.assign({}, options.headers || {}, {'X-PharmStock-Api-Key': apiKey.value});
+  if (options.body) headers['Content-Type'] = 'application/json';
+  const response = await fetch(path, Object.assign({}, options, {headers}));
+  if (!response.ok) throw new Error(`${response.status} ${await response.text()}`);
+  return response.json();
+}
+
+function metric(label, value) {
+  return `<div class="card metric"><span class="muted">${label}</span><strong>${value}</strong></div>`;
+}
+
+async function refreshAll() {
+  document.getElementById('error').textContent = '';
+  try {
+    const status = document.getElementById('statusFilter').value;
+    const type = document.getElementById('typeFilter').value;
+    const query = new URLSearchParams();
+    if (status) query.set('status', status);
+    if (type) query.set('decision_type', type);
+    const [summary, result] = await Promise.all([
+      api('/v1/metrics/summary'), api(`/v1/cases?${query.toString()}`)
+    ]);
+    document.getElementById('metrics').innerHTML = [
+      metric('Active', summary.active_cases), metric('Open', summary.open_cases),
+      metric('Acknowledged', summary.acknowledged_cases), metric('Approved drafts', summary.approved_drafts),
+      metric('High priority', summary.high_priority_cases), metric('Closed', summary.closed_cases)
+    ].join('');
+    document.getElementById('cases').innerHTML = result.items.map(row => `
+      <tr>
+        <td><span class="status">${row.severity}</span></td><td>${row.decision_type}</td>
+        <td>${row.status}</td><td>${row.branch_name || row.branch_code || ''}</td>
+        <td>${row.trade_name_en || row.product_id || ''}</td><td>${row.recommended_units || ''}</td>
+        <td>${row.model_key || ''} v${row.model_version || ''}</td><td>${row.updated_at || ''}</td>
+        <td>
+          <button onclick="showDetail('${row.case_id}')">View</button>
+          <button onclick="act('${row.case_id}','acknowledge')">Ack</button>
+          ${row.decision_type === 'REORDER' ? `<button onclick="act('${row.case_id}','approve-draft')">Approve draft</button>` : ''}
+          <button onclick="act('${row.case_id}','reject')">Reject</button>
+          <button onclick="act('${row.case_id}','close')">Close</button>
+        </td>
+      </tr>`).join('');
+    document.getElementById('message').textContent = `${result.count} case(s)`;
+  } catch (err) {
+    document.getElementById('error').textContent = String(err);
+  }
+}
+
+async function showDetail(caseId) {
+  try {
+    const data = await api(`/v1/cases/${caseId}`);
+    document.getElementById('detail').textContent = JSON.stringify(data, null, 2);
+    document.getElementById('detailDialog').showModal();
+  } catch (err) { document.getElementById('error').textContent = String(err); }
+}
+
+async function act(caseId, action) {
+  const note = prompt(`Optional note for ${action}:`, '') ?? '';
+  try {
+    await api(`/v1/cases/${caseId}/actions`, {
+      method: 'POST', body: JSON.stringify({action, note})
+    });
+    await refreshAll();
+  } catch (err) { document.getElementById('error').textContent = String(err); }
+}
+</script>
+</body>
+</html>

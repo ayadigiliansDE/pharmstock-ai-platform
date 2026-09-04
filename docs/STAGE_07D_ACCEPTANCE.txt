@@ -1,0 +1,25 @@
+Stage 7D acceptance
+===================
+
+[ ] PharmStock version is 0.25.0
+[ ] Full pytest suite passes
+[ ] Ruff reports "All checks passed!"
+[ ] Docker container pharmstock-postgres is healthy
+[ ] PostgreSQL major version is 18
+[ ] wal_level = logical
+[ ] max_replication_slots >= 10
+[ ] max_wal_senders >= 10
+[ ] password_encryption = scram-sha-256
+[ ] Product rows match Stage 7A
+[ ] Price-history rows match Stage 7A
+[ ] Organization/branch rows match Stage 7B
+[ ] All 27 governorates remain represented
+[ ] Product economics and branch policies match Stage 7C
+[ ] POS terminal rows equal the sum of branch checkout_points
+[ ] Product/branch/organization/price foreign-key orphan checks are zero
+[ ] Financial retail price matches product master retail price
+[ ] pharmstock_cdc role has REPLICATION
+[ ] pharmstock_cdc_publication exists with 13 operational tables
+[ ] No Debezium slot is created yet
+[ ] No cloud mutation occurs
+[ ] Final marker is STAGE_7D_STATUS=PASS

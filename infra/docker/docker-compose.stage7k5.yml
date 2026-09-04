@@ -1,0 +1,45 @@
+services:
+  stage7k5-online:
+    build:
+      context: ../..
+      dockerfile: infra/docker/stage7k5/Dockerfile
+    image: pharmstock-stage7k5-online:0.35.2
+    container_name: pharmstock-stage7k5-online
+    command:
+      - python
+      - -m
+      - ml.stage7k5.worker
+    environment:
+      PYTHONPATH: /workspace:/workspace/src
+      KAFKA_BOOTSTRAP_SERVERS: kafka:19092
+      PHARMSTOCK_POSTGRES_HOST: postgres
+      PHARMSTOCK_POSTGRES_INTERNAL_PORT: "5432"
+      PHARMSTOCK_POSTGRES_DB: pharmstock_ops
+      PHARMSTOCK_POSTGRES_USER: pharmstock_admin
+      PHARMSTOCK_POSTGRES_PASSWORD: "${PHARMSTOCK_POSTGRES_PASSWORD:?PHARMSTOCK_POSTGRES_PASSWORD must be set}"
+      PHARMSTOCK_ML_SERVING_URI: http://model-serving:8090
+      PHARMSTOCK_STAGE7K5_CONSUMER_GROUP: "${PHARMSTOCK_STAGE7K5_CONSUMER_GROUP:-pharmstock-stage7k5-online-v1}"
+      PHARMSTOCK_STAGE7K5_ALERT_COOLDOWN_SECONDS: "${PHARMSTOCK_STAGE7K5_ALERT_COOLDOWN_SECONDS:-21600}"
+      PHARMSTOCK_STAGE7K5_MAX_AFFECTED_KEYS: "${PHARMSTOCK_STAGE7K5_MAX_AFFECTED_KEYS:-500}"
+      PHARMSTOCK_STAGE7K5_MAX_EXPIRY_BATCHES_PER_KEY: "${PHARMSTOCK_STAGE7K5_MAX_EXPIRY_BATCHES_PER_KEY:-100}"
+      PHARMSTOCK_STAGE7K5_MAX_PROCESSING_BACKOFF_SECONDS: "${PHARMSTOCK_STAGE7K5_MAX_PROCESSING_BACKOFF_SECONDS:-30}"
+      PHARMSTOCK_STAGE7K5_HEARTBEAT_MAX_AGE_SECONDS: "${PHARMSTOCK_STAGE7K5_HEARTBEAT_MAX_AGE_SECONDS:-45}"
+      PHARMSTOCK_STAGE7K5_MAX_PENDING_OUTBOX: "${PHARMSTOCK_STAGE7K5_MAX_PENDING_OUTBOX:-1000}"
+      PHARMSTOCK_STAGE7K5_MAX_PENDING_OUTBOX_AGE_SECONDS: "${PHARMSTOCK_STAGE7K5_MAX_PENDING_OUTBOX_AGE_SECONDS:-300}"
+      PHARMSTOCK_STAGE7K5_ARTIFACT_ROOT: artifacts/stage7k5
+    volumes:
+      - ../..:/workspace
+    depends_on:
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      model-serving:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-m", "ml.stage7k5.worker", "--healthcheck"]
+      interval: 15s
+      timeout: 10s
+      retries: 4
+      start_period: 25s
+    restart: unless-stopped

@@ -1,0 +1,22 @@
+Stage 7G acceptance
+===================
+
+PASS requires all of the following:
+
+1. Stage 7E and Stage 7F success markers exist.
+2. PostgreSQL, Kafka and the Stage 7F Debezium connector are running.
+3. High-watermark offsets are captured for all 14 CDC topics before the snapshot.
+4. Spark 4.2.0 exports all 26 Stage 7G tables from PostgreSQL to Parquet/Snappy.
+5. Core production-scale minimums remain satisfied, including 5,000 branches,
+   >=1.2M sale headers and >=2.0M sale lines.
+6. End offsets are captured after the historical snapshot.
+7. Spark consumes exactly the Kafka range [start_offset,end_offset) with zero invalid CDC rows.
+8. Any CDC-managed table changed during cutover is reconciled by primary key.
+9. End offsets are persisted as CDC resume offsets.
+10. A BigQuery-ready rebuild plan is generated.
+11. Historical Stage 7E rows are not replayed through Kafka.
+12. Cloud mutation is NO.
+
+Success marker:
+
+STAGE_7G_STATUS=PASS

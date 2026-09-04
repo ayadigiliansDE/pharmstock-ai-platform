@@ -1,0 +1,21 @@
+Stage 7K v0.34.2 acceptance
+===========================
+[ ] Stage 7J _SUCCESS marker exists
+[ ] BigQuery storage guard is below hard stop
+[ ] BigQuery writes = NONE
+[ ] Raw baseline copy = NONE
+[ ] Scientific training provenance is recorded
+[ ] Demand 1/7/14/30d horizons all pass production acceptance
+[ ] Stockout rare-event ranking/calibration/operating-point gates pass
+[ ] Reorder historical replay + scenario gates pass
+[ ] Expiry stochastic calibration + scenario gates pass
+[ ] Strict 4/4 candidate gate passes before promotion
+[ ] 4 registered model champion aliases exist
+[ ] MLflow /health responds
+[ ] Multi-model serving /health reports 4/4 production-ready champions
+[ ] 4/4 champion inference smoke predictions pass
+[ ] training_manifest.json exists
+[ ] stage7k_report.json exists
+[ ] STAGE_7K_SCIENTIFIC_VALIDATION_STATUS=PASS
+[ ] STAGE_7K_PRODUCTION_READINESS_STATUS=PASS
+[ ] STAGE_7K_STATUS=PASS

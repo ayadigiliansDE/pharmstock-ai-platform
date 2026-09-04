@@ -1,0 +1,84 @@
+{
+  "patch": "PHARMSTOCK_STAGE7K5_V0351_ONLINE_DECISION_RUNTIME",
+  "version": "0.35.1",
+  "prerequisite": "Stage 7F 14-topic CDC PASS + Stage 7K 4/4 champions PASS",
+  "cloud_mutation": false,
+  "bigquery_writes": false,
+  "files": [
+    {
+      "path": "src/pharmstock/ml/stage7k5.py",
+      "sha256": "0aacc934a08e3030f3653796319531e486ab0ed4094bd8649981b9a696e266f2",
+      "bytes": 10285
+    },
+    {
+      "path": "ml/stage7k5/__init__.py",
+      "sha256": "f181e9cd042fca229bc8c7888f5e6f158ed203b8152957503c66ec92f7ab54b8",
+      "bytes": 42
+    },
+    {
+      "path": "ml/stage7k5/worker.py",
+      "sha256": "47b009a64a2f176bf8c2343e050705c40c22094d47fa73a1b24c358f70eb851a",
+      "bytes": 50984
+    },
+    {
+      "path": "ml/stage7k/serve.py",
+      "sha256": "b5a06df2a7ed641b7988089560c2ec5bc97f335d05aae4ea120d89bb3194c221",
+      "bytes": 5915
+    },
+    {
+      "path": "infra/docker/postgres/sql/009_stage7k5_online_ml.sql",
+      "sha256": "ad02f6712c21f49c5513ab6f3bf30a9a495a4e66cc76c37316e09235d04e5c26",
+      "bytes": 5231
+    },
+    {
+      "path": "infra/docker/stage7k5/Dockerfile",
+      "sha256": "7ce91e029c548bb3f2fbc58f2baff95e2889c086510639c000babea1939b7696",
+      "bytes": 345
+    },
+    {
+      "path": "infra/docker/stage7k5/requirements.txt",
+      "sha256": "7f94a4b0b3d5a18c1d1e6bd4b93ded25a8fdf3d7dc70dd536359a52a5f054130",
+      "bytes": 47
+    },
+    {
+      "path": "infra/docker/docker-compose.stage7k5.yml",
+      "sha256": "78450203680a676882774d449b8e48d2bb632268ac61cdb2d0d8b15b9f32c981",
+      "bytes": 1433
+    },
+    {
+      "path": "scripts/run_stage7k5.py",
+      "sha256": "890178c567cf0b7fb61242ce26bc88754ed1e1b07651bcaa5b3bfe0ed45e0092",
+      "bytes": 7763
+    },
+    {
+      "path": "scripts/run_checkpoint.py",
+      "sha256": "ff429a425eab729c7eff11c82eccdfd109fff0631814796f38ef9023d2b1fac3",
+      "bytes": 4219
+    },
+    {
+      "path": "tests/test_stage7k5_online.py",
+      "sha256": "fcecd09bb8f76da37b244e5ce8fa09e7fe502c968d14cfb0a223655cb812edde",
+      "bytes": 7326
+    },
+    {
+      "path": "docs/STAGE7K5_STREAMING_ML_DESIGN.md",
+      "sha256": "af4e81eb8fd07632cfdd3c24715bdaac29fafa43be6875aee92879adbb3e5f4f",
+      "bytes": 4135
+    },
+    {
+      "path": "docs/STAGE_07K5_LOCAL_RUN.md",
+      "sha256": "081b61efd14197d36483f71bb76695cc895db481eeff0c1f80788d15b6cc0ce7",
+      "bytes": 1712
+    },
+    {
+      "path": "README_STAGE7K5_V0351_ONLINE_DECISION_RUNTIME.md",
+      "sha256": "f2c0349f6e6374c31f341c874d4ef7065be28d6e153184e235af20f34d810a00",
+      "bytes": 980
+    },
+    {
+      "path": "README_STAGE7K5_V0351_APPLY.txt",
+      "sha256": "d63ee2e41027130d9d894ebc575cf6f89827d7095f3a40b65fa568b07404716a",
+      "bytes": 1410
+    }
+  ]
+}
