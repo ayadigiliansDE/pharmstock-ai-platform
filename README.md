@@ -1,6 +1,19 @@
 # 💊 PharmStock AI Platform V2
 
-### Production-Oriented Data Engineering, Machine Learning & Governed AI Platform for Pharmacy Operations
+### End-to-End Data Engineering, MLOps & Governed AI for Pharmacy Operations
+
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.x-blue" alt="Python">
+  <img src="https://img.shields.io/badge/Docker-Containerized-2496ED" alt="Docker">
+  <img src="https://img.shields.io/badge/Apache%20Kafka-CDC%20Streaming-black" alt="Kafka">
+  <img src="https://img.shields.io/badge/Apache%20Spark-Distributed%20Processing-orange" alt="Spark">
+  <img src="https://img.shields.io/badge/Google%20BigQuery-Cloud%20Warehouse-4285F4" alt="BigQuery">
+  <img src="https://img.shields.io/badge/MLflow-Model%20Registry-0194E2" alt="MLflow">
+  <img src="https://img.shields.io/badge/Apache%20Airflow-Orchestration-017CEE" alt="Airflow">
+  <img src="https://img.shields.io/badge/Power%20BI-Business%20Intelligence-F2C811" alt="Power BI">
+</p>
+
 
 <p align="center">
   <strong>CDC Streaming • Large-Scale Data Engineering • MLOps • Online ML • Human-in-the-Loop Decisions • Governed AI • Business Intelligence</strong>
@@ -48,6 +61,31 @@ The repository implements a connected platform where **data engineering, analyti
 
 ---
 
+
+## 📑 Table of Contents
+
+- [Overview](#-overview)
+- [Platform Objectives](#-platform-objectives)
+- [System Architecture](#-system-architecture)
+- [Platform Layers](#-platform-layers)
+- [Governed AI Assistant](#-governed-ai-assistant--stage-7o)
+- [Operational Decision Workbench](#-operational-decision-workbench--stage-7m)
+- [Data Engineering Pipeline](#-data-engineering-pipeline)
+- [Cloud Analytics Layer](#-cloud-analytics-layer)
+- [Orchestration, Data Quality & Monitoring](#-orchestration-data-quality--monitoring)
+- [Machine Learning Layer](#-machine-learning-layer)
+- [MLOps with MLflow](#-mlops-with-mlflow)
+- [Online ML & Model Serving](#-online-ml--model-serving)
+- [Governance & Human-in-the-Loop Design](#-governance--human-in-the-loop-design)
+- [Business Intelligence](#-business-intelligence--power-bi)
+- [Technology Stack](#-technology-stack)
+- [Engineering Highlights](#-engineering-highlights)
+- [Repository Structure](#-repository-structure)
+- [Running the Platform](#-running-the-platform)
+- [Validation Philosophy](#-validation-philosophy)
+- [Security & Responsible AI](#-security--responsible-ai)
+- [Data & Deployment Disclaimer](#-data--deployment-disclaimer)
+  
 ## 🎯 Platform Objectives
 
 PharmStock V2 was designed to address several engineering problems within one system:
@@ -327,7 +365,7 @@ CDC Changes
 Consistent Analytical State
 ```
 
-The historical rebuild implementation covers **26 snapshot tables and 13 CDC topics**, with explicit cutover-gap protection and a BigQuery-ready rebuild path. :contentReference[oaicite:0]{index=0}
+The historical rebuild implementation covers **26 snapshot tables and 13 CDC topics**, with explicit cutover-gap protection and a BigQuery-ready rebuild path. 
 
 ---
 
@@ -351,7 +389,7 @@ Curated Analytical Models
 ML / BI / Operational Analytics
 ```
 
-The platform maintains **26 raw tables, 26 current-state views, and curated gold models** while validating CDC integrity and analytical consistency. :contentReference[oaicite:1]{index=1}
+The platform maintains **26 raw tables, 26 current-state views, and curated gold models** while validating CDC integrity and analytical consistency. 
 
 ---
 
@@ -397,7 +435,7 @@ The implemented data-quality layer validates conditions such as:
 - Debezium connector health
 - BigQuery storage guardrails
 
-A validated Stage 7J execution reported **zero duplicate CDC event rows**, all **26 current-state views**, and a healthy Debezium connector. :contentReference[oaicite:2]{index=2}
+A validated Stage 7J execution reported **zero duplicate CDC event rows**, all **26 current-state views**, and a healthy Debezium connector. 
 
 <p align="center">
   <img
@@ -446,7 +484,7 @@ The implementation includes:
 - champion aliases
 - controlled model promotion
 
-The serving layer currently validates **4 loaded models and 4 production-ready models** under a strict quality gate. :contentReference[oaicite:3]{index=3}
+The serving layer currently validates **4 loaded models and 4 production-ready models** under a strict quality gate. 
 
 ## 🏆 Champion Model Registry
 
@@ -644,7 +682,7 @@ Airflow Metadata Database
 Operational Dashboard
 ```
 
-A validated runtime snapshot showed the Stage 7O assistant, Stage 7M API, Stage 7L workflow, online ML worker, model-serving service, MLflow, PostgreSQL, Kafka, Airflow, Spark and supporting services running together. :contentReference[oaicite:4]{index=4}
+A validated runtime snapshot showed the Stage 7O assistant, Stage 7M API, Stage 7L workflow, online ML worker, model-serving service, MLflow, PostgreSQL, Kafka, Airflow, Spark and supporting services running together. 
 
 ---
 
@@ -731,25 +769,27 @@ This flow demonstrates the core principle of the platform:
 
 # 📁 Repository Structure
 
-The repository is organized by platform responsibility rather than presenting historical development patches at the project root.
+The repository is organized by platform responsibility, with engineering, analytics, machine learning, orchestration, governance, and BI components separated into dedicated modules.
 
 ```text
 pharmstock-ai-platform-v2/
 │
-├── dags/                     # Airflow orchestration
-├── dbt/                      # Analytics engineering models
-├── docker/                   # Container runtime definitions
-├── docs/
+├── airflow/                  # Airflow runtime and orchestration support
+├── dags/                     # Airflow DAG definitions
+├── dbt/                      # Analytics engineering and warehouse transformations
+├── docs/                     # Project documentation
 │   └── assets/
-│       └── screenshots/      # README platform evidence
-├── ml/                       # Machine-learning components
-├── operations/               # Governed operational layers
-│   ├── stage7m/              # Operational Decision Workbench
-│   └── stage7o/              # Governed AI Assistant
-├── scripts/                  # Execution / validation utilities
-├── src/                      # Core application packages
-├── tests/                    # Automated validation
-└── README.md
+│       └── screenshots/      # README platform screenshots
+│
+├── infra/                    # Docker and infrastructure configuration
+├── ml/                       # ML training, registry and serving components
+├── operations/               # Operational governance and AI layers
+├── powerbi/                  # Power BI model / reporting assets
+├── scripts/                  # Execution, validation and checkpoint scripts
+├── spark/                    # Spark processing jobs
+├── src/                      # Core PharmStock Python packages
+├── tests/                    # Automated tests
+└── warehouse/                # Warehouse-related assets and definitions
 ```
 
 > The exact repository structure evolves with the platform. Historical implementation notes and development artifacts are intentionally kept away from the primary repository landing experience.
@@ -806,7 +846,7 @@ Validation covers multiple layers, including:
 - RBAC
 - AI governance boundaries
 
-For example, the validated runtime reports Stage 7O as healthy with Stage 7M healthy underneath it, while Stage 7M reports Stage 7L healthy and procurement writes blocked. :contentReference[oaicite:5]{index=5} :contentReference[oaicite:6]{index=6}
+For example, the validated runtime reports Stage 7O as healthy with Stage 7M healthy underneath it, while Stage 7M reports Stage 7L healthy and procurement writes blocked. 
 
 ---
 
