@@ -1,5 +1,7 @@
 # 💊 PharmStock AI Platform V2
 
+### End-to-End Data Engineering, MLOps & Governed AI for Pharmacy Operations
+
 ### Production-Oriented Data Engineering, Machine Learning & Governed AI Platform for Pharmacy Operations
 
 <p align="center">
@@ -47,7 +49,31 @@ The repository implements a connected platform where **data engineering, analyti
 > **Data transparency:** Operational data presented by the platform is synthetic/calibrated and is used for production-style simulation. It does not represent live pharmacy operations.
 
 ---
+## 📑 Table of Contents
 
+- [Overview](#-overview)
+- [Platform Objectives](#-platform-objectives)
+- [System Architecture](#️-system-architecture)
+- [Platform Layers](#-platform-layers)
+- [Governed AI Assistant](#-governed-ai-assistant--stage-7o)
+- [Operational Decision Workbench](#️-operational-decision-workbench--stage-7m)
+- [Data Engineering Pipeline](#️-data-engineering-pipeline)
+- [Cloud Analytics Layer](#️-cloud-analytics-layer)
+- [Orchestration, Data Quality & Monitoring](#-orchestration-data-quality--monitoring)
+- [Machine Learning Layer](#-machine-learning-layer)
+- [MLOps with MLflow](#-mlops-with-mlflow)
+- [Online ML & Model Serving](#-online-ml--model-serving)
+- [Governance & Human-in-the-Loop Design](#-governance--human-in-the-loop-design)
+- [Business Intelligence](#-business-intelligence--power-bi)
+- [Technology Stack](#️-technology-stack)
+- [Engineering Highlights](#-engineering-highlights)
+- [Repository Structure](#-repository-structure)
+- [Running the Platform](#-running-the-platform)
+- [Validation Philosophy](#-validation-philosophy)
+- [Security & Responsible AI](#️-security--responsible-ai)
+- [Data & Deployment Disclaimer](#️-data--deployment-disclaimer)
+
+  
 ## 🎯 Platform Objectives
 
 PharmStock V2 was designed to address several engineering problems within one system:
@@ -731,26 +757,27 @@ This flow demonstrates the core principle of the platform:
 
 # 📁 Repository Structure
 
-The repository is organized by platform responsibility rather than presenting historical development patches at the project root.
+The repository is organized by platform responsibility, with engineering, analytics, machine learning, orchestration, governance, and BI components separated into dedicated modules.
 
 ```text
 pharmstock-ai-platform-v2/
 │
-├── dags/                     # Airflow orchestration
-├── dbt/                      # Analytics engineering models
-├── docker/                   # Container runtime definitions
-├── docs/
+├── airflow/                  # Airflow runtime and orchestration support
+├── dags/                     # Airflow DAG definitions
+├── dbt/                      # Analytics engineering and warehouse transformations
+├── docs/                     # Project documentation
 │   └── assets/
-│       └── screenshots/      # README platform evidence
-├── ml/                       # Machine-learning components
-├── operations/               # Governed operational layers
-│   ├── stage7m/              # Operational Decision Workbench
-│   └── stage7o/              # Governed AI Assistant
-├── scripts/                  # Execution / validation utilities
-├── src/                      # Core application packages
-├── tests/                    # Automated validation
-└── README.md
-```
+│       └── screenshots/      # README platform screenshots
+│
+├── infra/                    # Docker and infrastructure configuration
+├── ml/                       # ML training, registry and serving components
+├── operations/               # Operational governance and AI layers
+├── powerbi/                  # Power BI model / reporting assets
+├── scripts/                  # Execution, validation and checkpoint scripts
+├── spark/                    # Spark processing jobs
+├── src/                      # Core PharmStock Python packages
+├── tests/                    # Automated tests
+└── warehouse/                # Warehouse-related assets and definitions
 
 > The exact repository structure evolves with the platform. Historical implementation notes and development artifacts are intentionally kept away from the primary repository landing experience.
 
