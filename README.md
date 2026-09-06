@@ -51,6 +51,8 @@ Governed Decision Workflow
 Operational Workbench + Governed AI Assistant
     ↓
 Power BI
+    ↓
+Unified Platform Control Center
 ```
 
 This is not a notebook-only ML project or a standalone BI dashboard.
@@ -85,6 +87,7 @@ The repository implements a connected platform where **data engineering, analyti
 - [Validation Philosophy](#-validation-philosophy)
 - [Security & Responsible AI](#-security--responsible-ai)
 - [Data & Deployment Disclaimer](#-data--deployment-disclaimer)
+- [Unified Platform Control Center](#️-unified-platform-control-center--stage-7p)
   
 ## 🎯 Platform Objectives
 
@@ -195,7 +198,7 @@ The AI assistant operates through governed evidence and provenance rather than u
 | **Decision Governance** | Governed Workflow + RBAC | Controlled operational actions |
 | **AI Assistance** | Governed AI Assistant | Evidence-grounded operational investigation |
 | **Business Intelligence** | Power BI | Executive and operational reporting |
-
+| **Unified Monitoring** | FastAPI + Stage 7P Control Center | Cross-platform health, operational access and analytics visibility |
 ---
 
 # 🧠 Governed AI Assistant — Stage 7O
@@ -706,6 +709,7 @@ A validated runtime snapshot showed the Stage 7O assistant, Stage 7M API, Stage 
 | **Business Intelligence** | Power BI |
 | **Containerization** | Docker / Docker Compose |
 | **Version Control** | Git / GitHub |
+| **Unified Control Center** | FastAPI, HTML, CSS, JavaScript |
 
 ---
 
@@ -728,7 +732,7 @@ Some of the key implementation characteristics of the platform include:
 - human approval boundaries
 - provenance-aware AI assistance
 - executive and AI-oriented Power BI reporting
-
+- unified Stage 7P platform control center with live service-health monitoring
 ---
 
 # 🧩 End-to-End Operational Flow
@@ -783,13 +787,15 @@ pharmstock-ai-platform-v2/
 │
 ├── infra/                    # Docker and infrastructure configuration
 ├── ml/                       # ML training, registry and serving components
-├── operations/               # Operational governance and AI layers
+├── operations/               # Operational governance, AI and control-center layers
+│   └── stage7p/              # Unified Platform Control Center
 ├── powerbi/                  # Power BI model / reporting assets
 ├── scripts/                  # Execution, validation and checkpoint scripts
 ├── spark/                    # Spark processing jobs
 ├── src/                      # Core PharmStock Python packages
 ├── tests/                    # Automated tests
 └── warehouse/                # Warehouse-related assets and definitions
+
 ```
 
 > The exact repository structure evolves with the platform. Historical implementation notes and development artifacts are intentionally kept away from the primary repository landing experience.
@@ -883,7 +889,7 @@ Machine-learning predictions, replenishment recommendations, dashboards, and AI 
 
 PharmStock AI Platform V2 demonstrates an integrated implementation across:
 
-**Data Engineering → Streaming → Cloud Analytics → Analytics Engineering → MLOps → Online ML → Decision Governance → Governed AI → Business Intelligence**
+**Data Engineering → Streaming → Cloud Analytics → Analytics Engineering → MLOps → Online ML → Decision Governance → Governed AI → Business Intelligence → Unified Platform Monitoring**
 
 The objective is not simply to predict pharmacy demand.
 
@@ -903,7 +909,7 @@ The control center provides visibility into:
 - Governed Decision Workbench and Governed AI Assistant availability
 - Model and decision metrics
 - Direct access to operational applications
-- Embedded Power BI dashboard demonstration
+- Integrated Power BI video demonstration and report gallery
 
 <p align="center">
   <img
@@ -919,6 +925,7 @@ The control center provides visibility into:
 
 ## 📸 Platform Evidence
 
+| 🖥️ Unified Monitoring | Stage 7P Platform Control Center |
 | Component | Evidence |
 |---|---|
 | 🤖 Governed AI | Stage 7O AI Assistant |
@@ -934,8 +941,7 @@ All screenshots shown above are captured from the implemented PharmStock V2 envi
 
 ## 📌 Status
 
-**Current platform milestone: Stage 7O — Governed AI Assistant**
-
+**Current platform milestone: Stage 7P — Unified Platform Control Center**
 Core end-to-end capabilities implemented:
 
 **CDC → Streaming → Distributed Processing → Cloud Analytics → ML → Online Inference → Governed Decisions → AI Assistance → BI → Unified Monitoring**
