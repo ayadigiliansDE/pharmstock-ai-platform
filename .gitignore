@@ -72,3 +72,6 @@ artifacts/**
 
 # dbt runtime logs
 operations/stage7p/static/powerbi-demo.mp4operations/stage7p/static/powerbi-demo.mp4
+
+# Local Stage 7P Power BI demo video
+operations/stage7p/static/powerbi-demo.mp4
