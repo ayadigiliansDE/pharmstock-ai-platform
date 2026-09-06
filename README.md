@@ -891,6 +891,32 @@ The objective is to demonstrate how a prediction can travel through a controlled
 
 ---
 
+# 🖥️ Unified Platform Control Center — Stage 7P
+
+PharmStock V2 includes a unified operational control center that brings platform health, data operations, MLOps, governed decisions, operational applications, and executive analytics into a single monitoring interface.
+
+The control center provides visibility into:
+
+- PostgreSQL, Kafka, Debezium, Spark and Docker runtime health
+- Airflow, BigQuery and dbt operational state
+- MLflow, model serving and online ML health
+- Governed Decision Workbench and Governed AI Assistant availability
+- Model and decision metrics
+- Direct access to operational applications
+- Embedded Power BI dashboard demonstration
+
+<p align="center">
+  <img
+    src="docs/assets/screenshots/pharmstock-platform-control-center.png"
+    alt="PharmStock Platform Control Center"
+    width="95%"
+  />
+</p>
+
+<p align="center">
+  <em>Unified monitoring across data engineering, MLOps, governed AI and business intelligence.</em>
+</p>
+
 ## 📸 Platform Evidence
 
 | Component | Evidence |
@@ -912,7 +938,7 @@ All screenshots shown above are captured from the implemented PharmStock V2 envi
 
 Core end-to-end capabilities implemented:
 
-**CDC → Streaming → Distributed Processing → Cloud Analytics → ML → Online Inference → Governed Decisions → AI Assistance → BI**
+**CDC → Streaming → Distributed Processing → Cloud Analytics → ML → Online Inference → Governed Decisions → AI Assistance → BI → Unified Monitoring**
 
 ---
 
